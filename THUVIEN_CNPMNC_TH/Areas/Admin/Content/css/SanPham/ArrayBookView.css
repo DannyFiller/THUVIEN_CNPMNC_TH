@@ -1,0 +1,170 @@
+﻿body {
+    height: 90vh;
+}
+
+.Content {
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: Black;
+}
+
+th {
+    background-color: red;
+    color: white;
+    font-weight: 900;
+    font-size: 20px;
+}
+
+td {
+    font-size: 14px;
+    height: 130px;
+}
+
+img {
+    max-height: 200px;
+    max-width: 100px;
+}
+
+#searchInput {
+    padding: 8px;
+    border: 2px solid black;
+    border-radius: 4px;
+    margin: 0 0 20px 0;
+    width: 80%;
+    box-sizing: border-box;
+    font-size: 16px;
+    display: block;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+
+
+.edit-btn, .deltail-btn, .delete-btn {
+    background-color: none;
+    border: none;
+    color: red;
+    background-color: transparent;
+}
+
+.add-book {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+}
+
+
+    .add-book:hover {
+        background-color: #0056b3;
+    }
+
+.action-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+input:checked + .slider {
+    background-color: Green;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* CSS cho trạng thái "Bật" và "Tắt" */
+.slider.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+
+select {
+    margin-right: 10px;
+    word-wrap: normal;
+    height: 43px;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+#sortType {
+    margin-left: 10px;
+    word-wrap: normal;
+    height: 43px;
+    border: 2px solid;
+    border-radius: 5px;
+}

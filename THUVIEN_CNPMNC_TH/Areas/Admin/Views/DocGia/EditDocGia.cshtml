@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "EditDocGia";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@model THUVIEN_CNPMNC_TH.Models.DocGia
+<link href="~/Areas/Admin/Content/css/DocGia/EditDG.css" rel="stylesheet" />
+
+
+<div class="container">
+    <h1>CHỈNH SỬA ĐỘC GIẢ</h1>
+    <form method="post" action="/Admin/DocGia/SaveEdit">
+        <input type="hidden" name="MaDocGia" value="@Model.MaDocGia" />
+        <div>
+            <label for="TenDocGia">Tên DG:</label>
+            <input type="text" name="TenDocGia" value="@Model.TenDocGia" />
+        </div>
+        <div>
+            <label for="GioiTinh">Giới tính:</label>
+            <select name="GioiTinh" id="GioiTinhSelect">
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="SDT">Số điện thoại:</label>
+            <input type="text" name="SDT" value="@Model.SoDienThoai" />
+        </div>
+        <div>
+            <label for="NgaySinh">Ngày sinh:</label>
+            <input type="date" name="NgaySinh" value="@Model.NgaySinh?.ToString(" yyyy-MM-dd")" />
+        </div>
+        <div>
+            <label for="DiaChi">Địa chỉ :</label>
+            <input type="text" name="DiaChi" value="@Model.DiaChi" />
+        </div>
+        <!-- Add more input fields for other properties -->
+        <div>
+            <input class="save" type="submit" value="Save" />
+            <a class="cancel" href="/Admin/DocGia/QLDocGia">Cancel</a>
+        </div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var gioiTinhValue = "@Model.GioiTinh"; // Giá trị mô hình
+
+        // Đặt giá trị mặc định cho trường chọn dựa trên giá trị mô hình
+        $("#GioiTinhSelect").val(gioiTinhValue);
+    });
+</script>
+
+

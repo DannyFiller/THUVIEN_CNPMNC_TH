@@ -1,0 +1,354 @@
+﻿@using THUVIEN_CNPMNC_TH.Models
+
+@{
+    ViewBag.Title = "BorrowingSchedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model ViewModel
+<div class="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="~/HomeClient/Index">
+                <img class="logo" src="~/Content/Images/logo.png">
+                <span class="brand-text">PL LIBRARY</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll flex-wrap">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="~/HomeClient/Index" l">TRANG CHỦ </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/HomeClient/Library">THƯ VIỆN</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            DANH MỤC
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                            <li class="dropdown-submenu" id="theloai-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Thể Loại</a>
+                                <ul class="dropdown-menu" aria-labelledby="theloai-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Kinh Tế" })">Kinh Tế</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Tiểu Thuyết" })">Tiểu Thuyết</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Khoa Học" })">Khoa Học</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu" id="nxb-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Nhà Xuất Bản</a>
+                                <ul class="dropdown-menu" aria-labelledby="nxb-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất bản Hoa Ngữ" })">Nhà Xuất bản Hoa Ngữ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Trẻ" })">Nhà Xuất Bản Trẻ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Tương Lai" })">Nhà Xuất Bản Tương Lai</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <form class="d-flex search-form">
+                    <input class="form-control me-2" type="search" placeholder="Nhập từ khóa bạn cần tìm..." aria-label="Search">
+                    <button class="btn btn-primary" type="submit">Tìm Kiếm</button>
+                </form>
+
+
+                <ul style="--bs-scroll-height: 100px;">
+                    @if (Session["DocGiaRoles"] != null)
+                    {<!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <li class=" dangkythe">
+                                <a class="btn btn-primary" href="@Url.Action("DangKyTheDocGia","HomeClient")">Đăng ký thẻ </a>
+                            </li>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user"></i>
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="@Url.Action("ViewUserProfile","HomeClient")">
+                                        <i class="fas fa-user"></i>
+                                        Thông tin cá nhân
+                                    </a>
+                                    <a class="dropdown-item" href="@Url.Action("BorrowingSchedule","HomeClient")">
+                                        <i class="fas fa-user"></i>
+                                        Lịch sử mượn trả
+                                    </a>
+                                    <a class="dropdown-item" href="#" id="logoutButton">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng Xuất
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    <!-- Hiển thị liên kết "Đăng Nhập" khi đã đăng xuất -->
+                    @if (Session["DocGiaRoles"] == null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Login/LoginAndRegistration">ĐĂNG NHẬP</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container" style="margin-top:6rem;">
+    <h1>LỊCH SỬ MƯỢN TRẢ</h1>
+    <div class="btn-group" role="group">
+        <button id="btnDangDangKy" class="btn">Đang đăng ký</button>
+        <button id="btnDangMuon" class="btn ">Đang Mượn</button>
+        <button id="btnDaTra" class="btn ">Đã Trả</button>
+        <button id="btnDaPhat" class="btn ">Đã Phạt</button>
+    </div>
+
+    <div id="dangKyView" class="view">
+        @if (Model.BorrowingHistory.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã Phiếu Mượn</th>
+                        <th>Tên Sách</th>
+                        <th>Ngày Mượn</th>
+                        <th>Ngày Trả Dự Kiến</th>
+                        <th>Trạng Thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BorrowingHistory)
+                    {
+                        <tr>
+                            <td>@item.MaPhieu</td>
+                            <td>@item.Book.TenSach</td>
+                            <td>@item.NgayMuon</td>
+                            <td>@item.NgayTraDuKien</td>
+                            <td>@item.TrangThai</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Không có lịch sử mượn trả.</p>
+        }
+    </div>
+
+    <div id="dangMuonView" class="view">
+        @if (Model.BorrowingHistory.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã Phiếu Mượn</th>
+                        <th>Tên Sách</th>
+                        <th>Ngày Mượn</th>
+                        <th>Ngày Trả Dự Kiến</th>
+                        <th>Trạng Thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BorrowingHistory)
+                    {
+                        <tr>
+                            <td>@item.MaPhieu</td>
+                            <td>@item.Book.TenSach</td>
+                            <td>@item.NgayMuon</td>
+                            <td>@item.NgayTraDuKien</td>
+                            <td>@item.TrangThai</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Không có lịch sử mượn trả.</p>
+        }
+    </div>
+
+    <div id="daTraView" class="view">
+        @if (Model.BorrowingHistory.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã Phiếu Mượn</th>
+                        <th>Tên Sách</th>
+                        <th>Ngày Mượn</th>
+                        <th>Ngày Trả Dự Kiến</th>
+                        <th>Ngày Trả Thực Tế</th>
+                        <th>Trạng Thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BorrowingHistory)
+                    {
+                        <tr>
+                            <td>@item.MaPhieu</td>
+                            <td>@item.Book.TenSach</td>
+                            <td>@item.NgayMuon</td>
+                            <td>@item.NgayTraDuKien</td>
+                            <td>@item.NgayTraThucTe</td>
+                            <td>@item.TrangThai</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Không có lịch sử mượn trả.</p>
+        }
+    </div>
+
+
+    <div id="daPhatView" class="view">
+        @if (Model.BorrowingHistory.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã Phiếu Mượn</th>
+                        <th>Tên Sách</th>
+                        <th>Ngày Mượn</th>
+                        <th>Ngày Trả Dự Kiến</th>
+                        <th>Ngày Trả Thực Tế</th>
+                        <th>Trạng Thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BorrowingHistory)
+                    {
+                        <tr>
+                            <td>@item.MaPhieu</td>
+                            <td>@item.Book.TenSach</td>
+                            <td>@item.NgayMuon</td>
+                            <td>@item.NgayTraDuKien</td>
+                            <td>@item.NgayTraThucTe</td>
+                            <td>@item.TrangThai</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Không có lịch sử mượn trả.</p>
+        }
+    </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Hide all rows initially
+            $("table tbody tr").hide();
+
+            // Show rows based on the selected filter button
+            $("#btnDaTra").click(function () {
+                filterRows("Đã Trả");
+            });
+
+            $("#btnDangMuon").click(function () {
+                filterRows("Đang Mượn");
+            });
+
+            $("#btnDangDangKy").click(function () {
+                filterRows("Đang đăng ký");
+            });
+
+            $("#btnDaPhat").click(function () {
+                filterRows("Đã Phạt");
+            });
+
+            // Function to show rows with the specified status
+            function filterRows(status) {
+                $("table tbody tr").hide();
+                $("table tbody tr:contains('" + status + "')").show();
+            }
+        });
+        $(document).ready(function () {
+            $(".view").hide();
+
+            $("#dangKyView").show();
+            $("#btnDangDangKy").addClass("active-button");
+
+            $("#btnDaTra").click(function () {
+                $(".view").hide();
+                $("#daTraView").show();
+                $(".btn").removeClass("active-button"); 
+                $(this).addClass("active-button"); 
+            });
+
+            $("#btnDangDangKy").click(function () {
+                $(".view").hide();
+                $("#dangKyView").show();
+                $(".btn").removeClass("active-button");
+                $(this).addClass("active-button");
+            }).click(); 
+
+            $("#btnDangMuon").click(function () {
+                $(".view").hide();
+                $("#dangMuonView").show();
+                $(".btn").removeClass("active-button");
+                $(this).addClass("active-button");
+            });
+
+            $("#btnDaPhat").click(function () {
+                $(".view").hide();
+                $("#daPhatView").show();
+                $(".btn").removeClass("active-button");
+                $(this).addClass("active-button");
+            });
+        });
+    </script>
+<style>
+
+    .active-button#btnDangDangKy {
+        background-color: #008000;
+        color: white;
+        font-weight: 600;
+    }
+    .active-button#btnDangMuon {
+        background-color: #FFA500;
+        color: white;
+        font-weight: 600;
+    }
+
+    .active-button#btnDaTra {
+        background-color: #0000FF;
+        color: white;
+        font-weight: 600;
+    }
+
+    .active-button#btnDaPhat {
+        background-color: #FF0000;
+        color: white;
+        font-weight: 600;
+    }
+
+    .btn{
+        border: 0.5px solid black;
+        font-size:20px;
+    }
+
+    h1 {
+        color: red;
+        text-align: center;
+        margin-bottom: 20px;
+        font-family: 'Dancing Script', sans-serif;
+    }
+
+    th{
+        font-size: 20px;
+    }
+    td {
+        font-size: 18px;
+    }
+</style>

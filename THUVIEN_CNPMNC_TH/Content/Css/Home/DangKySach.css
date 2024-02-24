@@ -1,0 +1,99 @@
+﻿.dangkysach{
+    margin-top:50px;
+}
+h1 {
+    color: red;
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Dancing Script', sans-serif;
+    font-size:60px;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff; /* Nền trắng */
+    color: #000; /* Chữ nhập màu đen */
+}
+
+input[type="submit"],
+.save {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel {
+    background-color: #dc3545;
+    margin-left: 10px;
+    display: inline-block;
+    padding: 8px 16px;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* CSS cho trang thêm phiếu mượn trả */
+.form-horizontal {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+
+.text-danger {
+    color: #dc3545;
+}
+
+.form-control:focus {
+    background-color: white; 
+    color: black; 
+
+}
+.dangkysach {
+    padding: 50px;
+}
+
+.book-details {
+    text-align: center;
+}
+
+.book-details img {
+    max-width: auto;
+    height: 300px;
+}
+
+.book-title {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.btn-dangky {
+    background-color: #007BFF;
+    color: white;
+}
+
+.btn-dangky:hover {
+    background-color: #0056b3;
+}

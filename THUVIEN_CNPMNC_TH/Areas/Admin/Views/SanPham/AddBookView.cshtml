@@ -1,0 +1,178 @@
+﻿@model THUVIEN_CNPMNC_TH.Models.Book
+@{
+    ViewBag.Title = "AddBookView";
+}
+
+
+<link href="~/Areas/Admin/Content/css/SanPham/AddBookView.css" rel="stylesheet" />
+<script src="/path/or/uri/to/tinymce.min.js" referrerpolicy="origin"></script>
+<script type="text/javascript"
+        src='https://cdn.tiny.cloud/1/x3qgdtb5ciacelhye5u7rzmlra9rscq605jima6m82o8jm37/tinymce/6/tinymce.min.js'
+        referrerpolicy="origin">
+</script>
+<div class="container">
+
+    <h1>THÊM MỚI SÁCH</h1>
+
+    @using (Html.BeginForm("AddBookView", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.Label("Tên sách:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-12">
+                    @Html.DropDownList("selectedTenSach", (SelectList)ViewBag.TenSachList, "Chọn tên sách", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TenSach, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MaTheLoai, "Mã thể loại:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-12">
+                    <input type="checkbox" id="chooseTheLoai" name="chooseTheLoai" /> Chọn từ danh sách
+                    <br />
+                    <div id="theLoaiDropdown" style="display:none;">
+                        @Html.DropDownList("MaTheLoai", ViewBag.TheLoaiList as SelectList, "Chọn thể loại", new { @class = "form-control" })
+                    </div>
+                    <div id="theLoaiTextBox">
+                        @Html.TextBoxFor(model => model.MaTheLoai, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MaTheLoai)
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MaNXB, "Mã nhà xuất bản:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-12">
+                    <input type="checkbox" id="chooseMaNXB" name="chooseMaNXB" /> Chọn từ danh sách
+                    <br />
+                    <div id="maNXBDropdown" style="display:none;">
+                        @Html.DropDownList("MaNXB", ViewBag.NhaXuatBanList as SelectList, "Chọn nhà xuất bản", new { @class = "form-control" })
+                    </div>
+                    <div id="maNXBTextBox">
+                        @Html.TextBoxFor(model => model.MaNXB, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MaNXB)
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TacGia, "Tác giả:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.TacGia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TacGia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.SoLuong, "Số lượng:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control input-quantity" } })
+                    @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NamXuatBan, "Năm xuất bản:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-12">
+                    @Html.TextBoxFor(model => model.NamXuatBan, new { @class = "form-control input-date", type = "date" })
+                    @Html.ValidationMessageFor(model => model.NamXuatBan, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MoTa, "Mô tả:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.MoTa, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.HinhAnh, "Hình ảnh:")
+                <input type="file" name="imageFile" id="imageFile" />
+                <img id="previewImage" src="#" alt="Ảnh sách" style="max-width: 300px; max-height: 300px; display: none;" />
+                @Html.ValidationMessageFor(model => model.HinhAnh)
+            </div>
+
+
+            <input type="submit" value="Thêm Mới " class="btn btn-default" />
+
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Trở lại", "QLSach")
+    </div>
+
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        language: 'vi_VN',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+    });
+    tinymce.init(editor_config);
+</script>
+<script>
+    $(document).ready(function () {
+        $("#chooseTheLoai").change(function () {
+            if (this.checked) {
+                $("#theLoaiDropdown").show();
+                $("#theLoaiTextBox").hide();
+            } else {
+                $("#theLoaiDropdown").hide();
+                $("#theLoaiTextBox").show();
+            }
+        });
+
+        $("#chooseMaNXB").change(function () {
+            if (this.checked) {
+                $("#maNXBDropdown").show();
+                $("#maNXBTextBox").hide();
+            } else {
+                $("#maNXBDropdown").hide();
+                $("#maNXBTextBox").show();
+            }
+        });
+
+        // Thêm sự kiện thay đổi vào trường input file
+        $("#imageFile").change(function () {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#previewImage").attr("src", e.target.result);
+                    $("#previewImage").show();
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    });
+
+    $("#imageFile").change(function () {
+        if (ModelState.isValid) { // Kiểm tra ModelState trước khi thực hiện mã JavaScript
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#previewImage").attr("src", e.target.result);
+                    $("#previewImage").show();
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    });
+
+    tinymce.init({
+        selector: '.tinymce-editor',
+        height: 300,  // Điều chỉnh chiều cao theo ý muốn
+    });
+</script>

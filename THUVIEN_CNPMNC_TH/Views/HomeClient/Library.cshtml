@@ -1,0 +1,233 @@
+﻿
+@{
+    ViewBag.Title = "Library";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="~/HomeClient/Index">
+                <img class="logo" src="~/Content/Images/logo.png">
+                <span class="brand-text">PL LIBRARY</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll flex-wrap">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="~/HomeClient/Index" l">TRANG CHỦ </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">THƯ VIỆN</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            DANH MỤC
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                            <li class="dropdown-submenu" id="theloai-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Thể Loại</a>
+                                <ul class="dropdown-menu" aria-labelledby="theloai-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Kinh Tế" })">Kinh Tế</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Tiểu Thuyết" })">Tiểu Thuyết</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Khoa Học" })">Khoa Học</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu" id="nxb-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Nhà Xuất Bản</a>
+                                <ul class="dropdown-menu" aria-labelledby="nxb-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất bản Hoa Ngữ" })">Nhà Xuất bản Hoa Ngữ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Trẻ" })">Nhà Xuất Bản Trẻ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Tương Lai" })">Nhà Xuất Bản Tương Lai</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <form class="d-flex search-form">
+                    <input class="form-control me-2" type="search" placeholder="Nhập từ khóa bạn cần tìm..." aria-label="Search">
+                    <button class="btn btn-primary" type="submit">Tìm Kiếm</button>
+                </form>
+
+
+                <ul style="--bs-scroll-height: 100px;">
+                    @if (Session["DocGiaRoles"] != null)
+                    {<!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <li class=" dangkythe">
+                                <a class="btn btn-primary" href="@Url.Action("DangKyTheDocGia","HomeClient")">Đăng ký thẻ </a>
+                            </li>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user"></i>
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="@Url.Action("ViewUserProfile","HomeClient")">
+                                        <i class="fas fa-user"></i>
+                                        Thông tin cá nhân
+                                    </a>
+                                    <a class="dropdown-item" href="@Url.Action("BorrowingSchedule","HomeClient")">
+                                        <i class="fa-solid fa-clock-rotate-left" style="color: #000000;"></i>
+                                        Lịch sử mượn trả
+                                    </a>
+                                    <a class="dropdown-item" href="#" id="logoutButton">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng Xuất
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    <!-- Hiển thị liên kết "Đăng Nhập" khi đã đăng xuất -->
+                    @if (Session["DocGiaRoles"] == null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Login/LoginAndRegistration">ĐĂNG NHẬP</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<link rel="stylesheet" type="text/css" href="~/Content/Css/Home/Library.css">
+
+<style>
+    .cate-book {
+        margin-top: 5rem;
+    }
+    .search-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #f5f5f5;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    #searchInputBooks {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    #sortType {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+
+    #sortType option {
+        background-color: #fff;
+    }
+    .title-cate-book{
+        text-align:center;
+        font-size:54px !important;
+    }
+
+</style>
+
+<div class="row cate-book">
+
+    <div class="title-container">
+        <p class="title-cate-book">PL LIBRARY</p>
+        <div class="search-container">
+            <input type="text" id="searchInputBooks" placeholder="Hãy nhập thông tin bạn muốn tìm kiếm......">
+            <select id="sortType">
+                <option value="none">-- Lọc sách -- </option>
+                <option value="defaul">Mặc đinh </option>
+                <option value="asc">Mượn nhiều </option>
+                <option value="dec">Mượn ít </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="book-list row">
+        @foreach (var item in Model.Books)
+        {
+            if (item != null && item.TrungBay)
+            {
+                <div class="col-6 col-md-4 col-lg-2 book-card">
+                    <a style="text-decoration: none;" href="@Url.Action("XemChiTietSach", "HomeClient", new { MaSach = item.MaSach })">
+                        <div class="book-card__cover">
+                            <div class="book-card__book">
+                                <div class="book-card__book-front">
+                                    <img class="book-card__img" src=@Url.Content(item.HinhAnh) />
+                                </div>
+                                <div class="book-card__book-back"></div>
+                                <div class="book-card__book-side"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="book-card__title">
+                                @item.TenSach
+                            </div>
+                            <div>
+                                <a href="@Url.Action("DangKySach", "HomeClient", new { MaSach = item.MaSach })" style="text-decoration: none;">
+                                    <button>
+                                        <span>ĐĂNG KÝ</span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div style="display: none;" data-luotmuon="@item.LuotMuonTra"></div>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#searchInputBooks").on("input", function () {
+            var searchText = removeDiacritics($(this).val().toLowerCase());
+
+            $(".book-card").each(function () {
+                var bookTitle = removeDiacritics($(this).find(".book-card__title").text().toLowerCase());
+                if (bookTitle.includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        $("#sortType").change(function () {
+            var selectedSort = $(this).val();
+
+            // Lấy danh sách các cuốn sách
+            var books = $(".book-card");
+
+            if (selectedSort === "defaul") {
+                // Sắp xếp theo mặc định (không sắp xếp)
+            } else if (selectedSort === "dec") {
+                // Sắp xếp theo lượt mượn tăng dần
+                books.sort(function (a, b) {
+                    var aLuotMuon = parseInt($(a).find("div[data-luotmuon]").data("luotmuon"));
+                    var bLuotMuon = parseInt($(b).find("div[data-luotmuon]").data("luotmuon"));
+                    return aLuotMuon - bLuotMuon;
+                });
+            } else if (selectedSort === "asc") {
+                // Sắp xếp theo lượt mượn giảm dần
+                books.sort(function (a, b) {
+                    var aLuotMuon = parseInt($(a).find("div[data-luotmuon]").data("luotmuon"));
+                    var bLuotMuon = parseInt($(b).find("div[data-luotmuon]").data("luotmuon"));
+                    return bLuotMuon - aLuotMuon;
+                });
+            }
+
+            $(".book-list").html(books);
+        });
+    });
+</script>

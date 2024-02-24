@@ -1,0 +1,242 @@
+﻿@using System.Security.Claims
+@{
+    var userRoles = Session["DocGiaRoles"] as int?;
+}
+@model THUVIEN_CNPMNC_TH.Models.ViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Fuggles&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/Css/Home/Index.css">
+    <title>PLD LIBRARY</title>
+</head>
+<body>
+   
+    @RenderBody()
+
+    <!-- FOOTER -->
+
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-cta pt-5 pb-5">
+                <div class="row">
+                    <div class="col-xl-4 col-md-4 mb-30">
+                        <div class="single-cta">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="cta-text">
+                                <h4>Find us</h4>
+                                <span>10 QL22, Tân Xuân, Hóc Môn, Thành phố Hồ Chí Minh</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 mb-30">
+                        <div class="single-cta">
+                            <i class="fas fa-phone"></i>
+                            <div class="cta-text">
+                                <h4>Call us</h4>
+                                <span>0 9 4 7 2 8 4 5 9 1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 mb-30">
+                        <div class="single-cta">
+                            <i class="far fa-envelope-open"></i>
+                            <div class="cta-text">
+                                <h4>Mail us</h4>
+                                <span>pldlibrary@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-content pt-5 pb-5">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 mb-50">
+                        <div class="footer-widget">
+                            <div class="footer-logo">
+                                <a href="index.html"><img src="~/Content/Images/logo.png" class="img-fluid" alt="logo"></a>
+                            </div>
+                            <div class="footer-text">
+                                <p>PLD LIBRARY - Thư viện trực tuyến cho mượn sách, nơi bạn có thể dễ dàng tìm, mượn và đọc sách trực tuyến từ bất kỳ nơi đâu.</p>
+                            </div>
+                            <div class="footer-social-icon">
+                                <span>Follow us</span>
+                                <a href="https://www.facebook.com/profile.php?id=61551039560313"><i class="fab fa-facebook-f facebook-bg"></i></a>
+                                <a href="#"><i class="fab fa-twitter twitter-bg"></i></a>
+                                <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                        <div class="footer-widget">
+                            <div class="footer-widget-heading">
+                                <h3>Useful Links</h3>
+                            </div>
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Contact</a></li>
+                                <li><a href="#">About us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+                        <div class="footer-widget">
+                            <div class="footer-widget-heading">
+                                <h3>Subscribe</h3>
+                            </div>
+                            <div class="footer-text mb-25">
+                                <p>Đừng bỏ lỡ việc đăng ký các nguồn cấp dữ liệu mới của chúng tôi, vui lòng điền vào biểu mẫu bên dưới.</p>
+                            </div>
+                            <div class="subscribe-form">
+                                <form action="#">
+                                    <input type="text" placeholder="Email Address">
+                                    <button><i class="fab fa-telegram-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                        <div class="copyright-text">
+                            <p>Copyright &copy; 2023, All Right Reserved <a href="https://www.facebook.com/profile.php?id=61551039560313">LHP</a></p>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                        <div class="footer-menu">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+<!-- Liên kết với tệp CSS Bootstrap -->
+<link rel="stylesheet" href="path/to/bootstrap.min.css">
+
+<!-- Liên kết với thư viện jQuery (nếu cần) -->
+<script src="path/to/jquery.min.js"></script>
+
+<!-- Liên kết với tệp JavaScript Bootstrap -->
+<script src="path/to/bootstrap.min.js"></script>
+
+<script>
+    var theLoaiDropdown = document.getElementById('theloai-dropdown');
+    var nxbDropdown = document.getElementById('nxb-dropdown');
+    theLoaiDropdown.addEventListener('mouseover', function () {
+        var theLoaiMenu = this.querySelector('.dropdown-menu');
+        theLoaiMenu.classList.add('show');
+
+        var nxbMenu = nxbDropdown.querySelector('.dropdown-menu');
+        nxbMenu.classList.remove('show');
+    });
+
+    // Xử lý sự kiện hover cho Nhà Xuất Bản
+    nxbDropdown.addEventListener('mouseover', function () {
+        // Hiển thị dropdown Nhà Xuất Bản
+        var nxbMenu = this.querySelector('.dropdown-menu');
+        nxbMenu.classList.add('show');
+
+        // Ẩn dropdown Thể Loại (nếu đang hiển thị)
+        var theLoaiMenu = theLoaiDropdown.querySelector('.dropdown-menu');
+        theLoaiMenu.classList.remove('show');
+    });
+
+    // Xử lý sự kiện khi rời ra khỏi danh mục
+    theLoaiDropdown.addEventListener('mouseout', function () {
+        // Ẩn dropdown Thể Loại
+        var theLoaiMenu = this.querySelector('.dropdown-menu');
+        theLoaiMenu.classList.remove('show');
+    });
+
+    nxbDropdown.addEventListener('mouseout', function () {
+        // Ẩn dropdown Nhà Xuất Bản
+        var nxbMenu = this.querySelector('.dropdown-menu');
+        nxbMenu.classList.remove('show');
+    });
+
+</script>
+
+ <script>
+    function removeDiacritics(text) {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var searchInput = document.querySelector(".form-control");
+        var books = document.querySelectorAll(".book-card__title");
+        var searchResultsList = document.querySelector(".search-results-list");
+
+        searchInput.addEventListener("input", function () {
+            var searchTerm = removeDiacritics(searchInput.value.trim().toLowerCase());
+
+            // Lặp qua sách và tạo danh sách kết quả tìm kiếm
+            var searchResults = [];
+
+            books.forEach(function (book) {
+                var bookTitle = removeDiacritics(book.textContent.toLowerCase());
+
+                if (bookTitle.includes(searchTerm)) {
+                    var bookCard = book.closest(".book-card");
+                    var bookImageSrc = bookCard.querySelector(".book-card__img").src;
+                    searchResults.push({ title: book.textContent, imageSrc: bookImageSrc });
+                }
+            });
+
+            // Hiển thị danh sách kết quả tìm kiếm
+            displaySearchResults(searchResults);
+        });
+
+        function displaySearchResults(results) {
+            // Xóa danh sách kết quả tìm kiếm hiện tại
+            searchResultsList.innerHTML = "";
+
+            if (searchInput.value.trim() === "") {
+                // Nếu khung tìm kiếm trống, ẩn danh sách kết quả
+                searchResultsList.style.display = "none";
+            } else {
+                // Hiển thị danh sách kết quả tìm kiếm
+                searchResultsList.style.display = "block";
+
+                if (results.length === 0) {
+                    var noResultsItem = document.createElement("li");
+                    noResultsItem.textContent = "Không tìm thấy kết quả.";
+                    searchResultsList.appendChild(noResultsItem);
+                } else {
+                    results.forEach(function (result) {
+                        var listItem = document.createElement("li");
+                        var image = document.createElement("img");
+                        image.src = result.imageSrc;
+                        image.alt = result.title;
+                        var title = document.createElement("span");
+                        title.textContent = result.title;
+                        listItem.appendChild(image);
+                        listItem.appendChild(title);
+                        searchResultsList.appendChild(listItem);
+                    });
+                }
+            }
+        }
+    });
+</script>
+</html>

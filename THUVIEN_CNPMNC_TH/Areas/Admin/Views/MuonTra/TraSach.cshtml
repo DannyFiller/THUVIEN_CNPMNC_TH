@@ -1,0 +1,74 @@
+﻿@model THUVIEN_CNPMNC_TH.Models.PhieuMuonTra
+
+@{
+    ViewBag.Title = "TraSach";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/MuonTra/EditMuonTra.css" rel="stylesheet" />
+
+<div class="container">
+    <h1>TRẢ SÁCH</h1>
+    @using (Html.BeginForm("TraSach", "MuonTra", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.MaPhieu)
+
+        <label for="MaSach">Mã sách:</label><br>
+        @Html.DropDownListFor(model => model.MaSach, ViewBag.TenSach as SelectList, "-- Chọn sách --", new { id = "MaSach" })<br>
+
+        <label for="MaThuThu">Mã thủ thư:</label><br>
+        @Html.DropDownListFor(model => model.MaThuThu, ViewBag.TenThuThu as SelectList, "-- Chọn thủ thư --", new { id = "MaThuThu" })<br>
+
+        <label for="MaDocGia">Mã độc giả:</label><br>
+        @Html.DropDownListFor(model => model.MaDocGia, ViewBag.TenDocGia as SelectList, "-- Chọn độc giả --", new { id = "MaDocGia" })<br>
+
+        <label for="NgayMuon">Ngày mượn:</label><br>
+        @Html.TextBoxFor(model => model.NgayMuon, new { id = "NgayMuon" })<br>
+
+        <label for="NgayTraDuKien">Ngày trả dự kiến:</label><br>
+        @Html.TextBoxFor(model => model.NgayTraDuKien, new { id = "NgayTraDuKien" })<br>
+
+        <label for="NgayTraThucTe">Ngày trả thực tế:</label><br>
+        @Html.TextBoxFor(model => model.NgayTraThucTe, new { id = "NgayTraThucTe", type = "date" })<br>
+
+        <input type="submit" value="Lưu" class="btn btn-default" />
+        @*<a href="javascript:void(0);" class="btnPhieuPhat" onclick="redirectToThemPhieuPhat();">Thêm phiếu phạt</a>*@
+
+    }
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@*<script>
+        $(document).ready(function () {
+            var ngayTraDuKien = new Date($("#NgayTraDuKien").val());
+
+            $(".btnPhieuPhat").hide();
+
+            $("#NgayTraThucTe").on("change", function () {
+                var ngayTraThucTe = new Date($(this).val());
+
+                if (ngayTraThucTe > ngayTraDuKien) {
+                    alert("Hãy lập phiếu phạt!");
+
+                    $(".btnPhieuPhat").addClass("btn-success");
+
+                    $(":submit").hide();
+                    $(".btnPhieuPhat").show();
+
+                } else {
+                    $(".btnPhieuPhat").hide();
+                    $(":submit").show();
+                }
+            });
+        });
+
+        function redirectToThemPhieuPhat() {
+            var maPhieu = $("#MaPhieu").val();
+            if (maPhieu) {
+                window.location.href = "/Admin/MuonTra/ThemPhieuPhat?maPhieu=" + maPhieu;
+            }
+        }
+
+    </script>*@

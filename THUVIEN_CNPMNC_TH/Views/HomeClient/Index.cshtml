@@ -1,0 +1,507 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@{
+    var docGiaRoles = Session["DocGiaRoles"];
+}
+
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div id="msgAlert" class="alert alert-danger fixed-top" role="alert" style="z-index:99999 ; text-align:center ; height:70px; font-size:24px ;font-weight:600">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div id="msgAlert" class="alert alert-success fixed-top" role="alert" style="z-index: 99999; text-align: center; height: 70px; font-size: 24px; font-weight: 600 ">
+        @ViewBag.SuccessMessage
+    </div>
+}
+
+<style>
+    .cate-book{
+        justify-content: flex-start;
+        gap:10px;
+    }
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Thêm CSS tùy chỉnh -->
+
+<link rel="stylesheet" type="text/css" href="~/Content/Css/Home/Index.css">
+<div class="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="~/HomeClient/Index">
+                <img class="logo" src="~/Content/Images/logo.png">
+                <span class="brand-text">PL LIBRARY</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll flex-wrap">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="~/HomeClient/Index" l">TRANG CHỦ </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/HomeClient/Library">THƯ VIỆN</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            DANH MỤC
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                            <li class="dropdown-submenu" id="theloai-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Thể Loại</a>
+                                <ul class="dropdown-menu" aria-labelledby="theloai-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Kinh Tế" })">Kinh Tế</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Tiểu Thuyết" })">Tiểu Thuyết</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Khoa Học" })">Khoa Học</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu" id="nxb-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Nhà Xuất Bản</a>
+                                <ul class="dropdown-menu" aria-labelledby="nxb-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất bản Hoa Ngữ" })">Nhà Xuất bản Hoa Ngữ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Trẻ" })">Nhà Xuất Bản Trẻ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Tương Lai" })">Nhà Xuất Bản Tương Lai</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <form class="d-flex search-form">
+                    <input class="form-control me-2" type="search" placeholder="Nhập từ khóa bạn cần tìm..." aria-label="Search">
+                    <button class="btn btn-primary" type="submit">Tìm Kiếm</button>
+                </form>
+
+
+                <ul style="--bs-scroll-height: 100px;">
+                    @if (Session["DocGiaRoles"] != null)
+                    {<!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <li class=" dangkythe">
+                                <a class="btn btn-primary" href="@Url.Action("DangKyTheDocGia","HomeClient")">Đăng ký thẻ </a>
+                            </li>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user"></i>
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="@Url.Action("ViewUserProfile","HomeClient")">
+                                        <i class="fas fa-user"></i>
+                                        Thông tin cá nhân
+                                    </a>
+                                    <a class="dropdown-item" href="@Url.Action("BorrowingSchedule","HomeClient")">
+                                        <i class="fa-solid fa-clock-rotate-left" style="color: #000000;"></i>
+                                        Lịch sử mượn trả
+                                    </a>
+                                    <a class="dropdown-item" href="#" id="logoutButton">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng Xuất
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    <!-- Hiển thị liên kết "Đăng Nhập" khi đã đăng xuất -->
+                    @if (Session["DocGiaRoles"] == null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Login/LoginAndRegistration">ĐĂNG NHẬP</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="search-results">
+    <ul class="search-results-list">
+        <!-- Danh sách kết quả tìm kiếm sẽ được hiển thị ở đây -->
+    </ul>
+</div>
+<div class="container-fluid">
+    <div class="banner">
+        <div class="row">
+            <div class="col">
+                <div id="carouselExampleIndicators" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="~/Content/Images/1.bmp" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/Content/Images/2.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="~/Content/Images/1.bmp" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="content topbook">
+        <p class="title-content">SÁCH ĐƯỢC YÊU THÍCH NHẤT</p>
+        <div class="row">
+            <div class="col book-card">
+                <div class="book-card__cover">
+                    <div class="book-card__book">
+                        <div class="book-card__book-front">
+                            <img class="book-card__img" src="https://i.ibb.co/gTvbqnQ/harry-potter.jpg" />
+                        </div>
+                        <div class="book-card__book-back"></div>
+                        <div class="book-card__book-side"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="book-card__title">
+                        Harry Potter e a Pedra Filosofal
+                    </div>
+                    <div class="book-card__author">
+                        J. K. Rowling
+                    </div>
+                </div>
+            </div>
+            <div class="col book-card">
+                <div class="book-card__cover">
+                    <div class="book-card__book">
+                        <div class="book-card__book-front">
+                            <img class="book-card__img" src="https://vietart.co/blog/wp-content/uploads/2014/01/9_thiet_ke_bia_sach_dep_20.jpg" />
+                        </div>
+                        <div class="book-card__book-back"></div>
+                        <div class="book-card__book-side"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="book-card__title">
+                        The Vanishing Act: A Novel
+                    </div>
+                    <div class="book-card__author">
+                        Mette Jakobsen
+                    </div>
+                </div>
+            </div>
+            <div class="col book-card">
+                <div class="book-card__cover">
+                    <div class="book-card__book">
+                        <div class="book-card__book-front">
+                            <img class="book-card__img" src="https://m.media-amazon.com/images/I/51ReSxeuT4L._SY445_SX342_.jpg" />
+                        </div>
+                        <div class="book-card__book-back"></div>
+                        <div class="book-card__book-side"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="book-card__title">
+                        Killing the Witches
+                    </div>
+                    <div class="book-card__author">
+                        Martin Dugard (Author)
+                    </div>
+                </div>
+            </div>
+            <div class="col book-card">
+                <div class="book-card__cover">
+                    <div class="book-card__book">
+                        <div class="book-card__book-front">
+                            <img class="book-card__img" src="https://m.media-amazon.com/images/I/51pt0LAZVOL._SY445_SX342_.jpg" />
+                        </div>
+                        <div class="book-card__book-back"></div>
+                        <div class="book-card__book-side"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="book-card__title">
+                        Percy Jackson and the Olympians
+                    </div>
+                    <div class="book-card__author">
+                        Rick Riordan
+                    </div>
+                </div>
+            </div>
+            <div class="col book-card">
+                <div class="book-card__cover">
+                    <div class="book-card__book">
+                        <div class="book-card__book-front">
+                            <img class="book-card__img" src="https://m.media-amazon.com/images/I/51YlcKb484L._SY445_SX342_.jpg" />
+                        </div>
+                        <div class="book-card__book-back"></div>
+                        <div class="book-card__book-side"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="book-card__title">
+                        The Great Hunt (Wheel of Time, 2)
+                    </div>
+                    <div class="book-card__author">
+                        Robert Jordan
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cate-book">
+        <img src="~/Content/Images/banner2.png" alt="" class="banner" style="width: 100%; margin:0 !important">
+        @{
+            bool hasScienceBooksToShow = false;
+            foreach (var item in Model.Books)
+            {
+                if (item != null && item.TheLoai != null && item.TheLoai.TenTheLoai != null &&
+                    item.TheLoai.TenTheLoai.ToString().ToUpper() == "KHOA HỌC" && item.TrungBay)
+                {
+                    hasScienceBooksToShow = true;
+                    break;
+                }
+            }
+        }
+
+        @if (hasScienceBooksToShow)
+        {
+            <div class="row cate-book">
+                <p class="title-cate-book">SÁCH KHOA HỌC</p>
+                @foreach (var item in Model.Books)
+                {
+                    if (item != null && item.TheLoai != null && item.TheLoai.TenTheLoai != null &&
+                        item.TheLoai.TenTheLoai.ToString().ToUpper() == "KHOA HỌC" && item.TrungBay)
+                    {
+                        <div class="col-6 col-md-4 col-lg-2 book-card">
+                            <a style="text-decoration: none;" href="@Url.Action("XemChiTietSach", "HomeClient", new { MaSach = item.MaSach })">
+                                <div class="book-card__cover">
+                                    <div class="book-card__book">
+                                        <div class="book-card__book-front">
+                                            <img class="book-card__img" src=@Url.Content(item.HinhAnh) />
+                                        </div>
+                                        <div class="book-card__book-back"></div>
+                                        <div class="book-card__book-side"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="book-card__title">
+                                        @item.TenSach
+                                    </div>
+                                    <div>
+                                        <a href="@Url.Action("DangKySach", "HomeClient", new { MaSach = item.MaSach })" style="text-decoration: none;">
+                                            <button>
+                                                <span>ĐĂNG KÝ</span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+
+
+        @{
+            bool hasEconomicsBooksToShow = false;
+            foreach (var item in Model.Books)
+            {
+                if (item != null && item.TheLoai != null && item.TheLoai.TenTheLoai != null &&
+                    item.TheLoai.TenTheLoai.ToString().ToUpper() == "KINH TẾ" && item.TrungBay)
+                {
+                    hasEconomicsBooksToShow = true;
+                    break;
+                }
+            }
+        }
+
+        @if (hasEconomicsBooksToShow)
+        {
+            <div class="row cate-book">
+                <p class="title-cate-book">SÁCH KINH TẾ</p>
+                @foreach (var item in Model.Books)
+                {
+                    if (item != null && item.TheLoai != null && item.TheLoai.TenTheLoai != null &&
+                        item.TheLoai.TenTheLoai.ToString().ToUpper() == "KINH TẾ" && item.TrungBay)
+                    {
+                        <div class="col-6 col-md-4 col-lg-2 book-card">
+                            <a style="text-decoration: none;" href="@Url.Action("XemChiTietSach", "HomeClient", new { MaSach = item.MaSach })">
+                                <div class="book-card__cover">
+                                    <div class "book-card__book">
+                                        <div class="book-card__book-front">
+                                            <img class="book-card__img" src=@Url.Content(item.HinhAnh) />
+                                        </div>
+                                        <div class="book-card__book-back"></div>
+                                        <div class="book-card__book-side"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="book-card__title">
+                                        @item.TenSach
+                                    </div>
+                                    <div>
+                                        <a href="@Url.Action("DangKySach", "HomeClient", new { MaSach = item.MaSach })" style="text-decoration: none;">
+                                            <button>
+                                                <span>ĐĂNG KÝ</span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+
+
+        @{
+            bool hasNovelBooksToShow = false;
+            foreach (var item in Model.Books)
+            {
+                if (item != null && item.TheLoai != null && item.TheLoai.TenTheLoai != null &&
+                    item.TheLoai.TenTheLoai.ToString().ToUpper() == "TIỂU THUYẾT" && item.TrungBay)
+                {
+                    hasNovelBooksToShow = true;
+                    break;
+                }
+            }
+        }
+
+        @if (hasNovelBooksToShow)
+        {
+            <div class="row cate-book">
+                <p class="title-cate-book">TIỂU THUYẾT</p>
+                @foreach (var item in Model.Books)
+                {
+                    if (item != null && item.TheLoai != null && item.TheLoai.TenTheLoai != null &&
+                        item.TheLoai.TenTheLoai.ToString().ToUpper() == "TIỂU THUYẾT" && item.TrungBay)
+                    {
+                        <div class="col-6 col-md-4 col-lg-2 book-card">
+                            <a style="text-decoration: none;" href="@Url.Action("XemChiTietSach", "HomeClient", new { MaSach = item.MaSach })">
+                                <div class="book-card__cover">
+                                    <div class="book-card__book">
+                                        <div class="book-card__book-front">
+                                            <img class="book-card__img" src=@Url.Content(item.HinhAnh) />
+                                        </div>
+                                        <div class="book-card__book-back"></div>
+                                        <div class="book-card__book-side"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="book-card__title">
+                                        @item.TenSach
+                                    </div>
+                                    <div>
+                                        <a href="@Url.Action("DangKySach", "HomeClient", new { MaSach = item.MaSach })" style="text-decoration: none;">
+                                            <button>
+                                                <span>ĐĂNG KÝ</span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+
+
+        @{
+            bool hasBooksToShow = false;
+            foreach (var item in Model.Books)
+            {
+                if (item != null && item.TheLoai != null && item.TheLoai.TenTheLoai != null &&
+                    item.TheLoai.TenTheLoai.ToString().ToUpper() == "THIẾU NHI" && item.TrungBay)
+                {
+                    hasBooksToShow = true;
+                    break; // Nếu có ít nhất một sách thỏa mãn điều kiện, thì đặt biến hasBooksToShow thành true và thoát khỏi vòng lặp.
+                }
+            }
+        }
+
+        @if (hasBooksToShow)
+        {
+            <div class="row cate-book">
+                <p class="title-cate-book">SÁCH THIẾU NHI</p>
+                @foreach (var item in Model.Books)
+                {
+                    if (item != null && item.TheLoai != null && item.TheLoai.TenTheLoai != null &&
+                        item.TheLoai.TenTheLoai.ToString().ToUpper() == "THIẾU NHI" && item.TrungBay)
+                    {
+                        <div class="col-6 col-md-4 col-lg-2 book-card">
+                            <a style="text-decoration: none;" href="@Url.Action("XemChiTietSach", "HomeClient", new { MaSach = item.MaSach })">
+                                <div class="book-card__cover">
+                                    <div class="book-card__book">
+                                        <div class="book-card__book-front">
+                                            <img class="book-card__img" src=@Url.Content(item.HinhAnh) />
+                                        </div>
+                                        <div class="book-card__book-back"></div>
+                                        <div class="book-card__book-side"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="book-card__title">
+                                        @item.TenSach
+                                    </div>
+                                    <div>
+                                        <a href="@Url.Action("DangKySach", "HomeClient", new { MaSach = item.MaSach })" style="text-decoration: none;">
+                                            <button>
+                                                <span>ĐĂNG KÝ</span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            window.location.href = "/Login/Logout";
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("infoButton").addEventListener("click", function () {
+            window.location.href = "@Url.Action("ViewPersonalInfo", "HomeClient")";
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var alert = $("#msgAlert");
+        if (alert.length) {
+            alert.fadeOut(3500, function () {
+                alert.remove();
+            });
+        }
+    });
+</script>
+

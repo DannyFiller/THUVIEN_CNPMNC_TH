@@ -1,0 +1,90 @@
+﻿@model IEnumerable<THUVIEN_CNPMNC_TH.Models.PhieuPhat>
+@{
+    ViewBag.Title = "QLPhieuPhat";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+
+
+<link href="~/Areas/Admin/Content/css/PhieuPhat/QLPhieuPhat.css" rel="stylesheet" />
+<div class="container">
+    <h1>QUẢN LÝ PHIẾU PHẠT</h1>
+    <table class="table">
+        <tr>
+            <th>Mã phiếu phạt</th>
+            <th>Mã phiếu mượn</th>
+            <th>Số ngày trễ</th>
+            <th>Ngày phạt</th>
+            <th>Số tiền phạt</th>
+            <th></th>
+        </tr>
+        @foreach (var phieuPhat in Model)
+        {
+            <tr>
+                <td>@phieuPhat.MaPhieuPhat</td>
+                <td>@phieuPhat.MaPhieuMuon</td>
+                <td>@phieuPhat.SoNgayTre</td>
+                <td>@(phieuPhat.NgayPhat?.ToString("dd/MM/yyyy") ?? "")</td>
+                <td>@phieuPhat.SoTienPhat VND</td>
+                <td>
+                    <a href="#" class="action-btn delete-btn" data-phieu-id="@phieuPhat.MaPhieuPhat">Xóa</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<a href="/Admin/PhieuPhat/ThemPhieuPhat" class="btn-add">Thêm phiếu phạt</a>
+<div class="custom-modal" id="confirmationModal">
+    <div class="modal-content">
+        <h2>Xác nhận xóa phiếu phạt</h2>
+        <p>Bạn có muốn xóa phiếu phat này không?</p>
+        <div class="modal-buttons">
+            <button id="confirmDelete">Có</button>
+            <button id="cancelDelete">Không</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".delete-btn").on("click", function () {
+            var phieuId = $(this).data("phieu-id");
+            var confirmationModal = $("#confirmationModal");
+
+            // Hiển thị modal
+            confirmationModal.css("display", "flex");
+
+            // Xử lý nút Xác nhận
+            $("#confirmDelete").on("click", function () {
+                $.ajax({
+                    url: '/Admin/PhieuPhat/XoaPhieuPhat',
+                    type: 'POST',
+                    data: { id: phieuId },
+                    success: function (data) {
+                        if (data.success) {
+                            location.reload();
+                        } else {
+                            alert("Xóa thất bại.");
+                        }
+                    },
+                    error: function () {
+                        alert("Đã xảy ra lỗi trong khi xử lý yêu cầu của bạn.");
+                    }
+                });
+
+                // Đóng modal sau khi xác nhận
+                confirmationModal.hide();
+            });
+
+            // Xử lý nút Hủy
+            $("#cancelDelete").on("click", function () {
+                // Đóng modal khi hủy
+                confirmationModal.hide();
+            });
+        });
+    });
+</script>
+
+

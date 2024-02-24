@@ -1,0 +1,63 @@
+﻿@model IEnumerable<THUVIEN_CNPMNC_TH.Models.TheLoai>
+
+@{
+    ViewBag.Title = "Quản lý sách theo thể loại";
+}
+<link href="~/Areas/Admin/Content/css/SanPham/QLSTTL.css" rel="stylesheet" />
+
+<div class="content-book">
+    <div class="selected">
+        <h1>QUẢN LÝ SÁCH THEO THỂ LOẠI</h1>
+
+        @using (Html.BeginForm("QLSTTL", "SanPham", FormMethod.Get))
+        {
+            <div class="form-group">
+                <label class="label" for="maTheLoai">CHỌN THỂ LOẠI:</label>
+                <select name="maTheLoai" id="maTheLoai" onchange="this.form.submit()">
+                    @foreach (var theLoai in Model)
+                    {
+                        <option value="@theLoai.MaTheLoai" @(ViewBag.SelectedTheLoai == theLoai.MaTheLoai ? "selected" : "")>@theLoai.TenTheLoai</option>
+                    }
+                </select>
+            </div>
+        }
+    </div>
+
+    @if (ViewBag.Books != null)
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên sách</th>
+                    <th>Ảnh</th>
+                    <th>Tác giả</th>
+                    <th>Năm xuất bản</th>
+                    <th>Số lượng</th>
+                    <th>Nhà xuất bản</th>
+                    <th>Chi tiết</th>
+                    <!-- Thêm các cột khác tùy ý -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in ViewBag.Books)
+                {
+                    <tr>
+                        <td>@book.TenSach</td>
+                        <td><img src="@Url.Content(book.HinhAnh)" alt="Book Image" /></td>
+                        <td>@book.TacGia</td>
+                        <td>@book.NamXuatBan.ToString("dd/MM/yyyy")</td>
+                        <td>@book.SoLuong</td>
+                        <td>@book.NhaXuatBan.TenNXB</td>
+                        <td>
+                            <a href="/Admin/SanPham/DetailBookView?MaSach=@book.MaSach" class="action-btn detail-btn">Details</a>
+
+                        </td>
+
+                        <!-- Thêm các cột khác tùy ý -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+

@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/Css/Login/Login.css">
+</head>
+<body>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div id="msgAlert" class="alert alert-danger fixed-top" role="alert" style="z-index:99999 ; text-align:center ; height:70px; font-size:24px ;font-weight:600">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div id="msgAlert" class="alert alert-success fixed-top" role="alert" style="z-index: 99999; text-align: center; height: 70px; font-size: 24px; font-weight: 600 ">
+            @ViewBag.SuccessMessage
+        </div>
+    }
+    <div class="form">
+        <ul class="tab-group">
+            <li class="tab active"><a href="#login">ĐĂNG NHẬP</a></li>
+            <li class="tab"><a href="#signup">ĐĂNG KÝ</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="login">
+                <h1>Chào mừng đã trở lại!</h1>
+                <form action="@Url.Action("KiemTraDangNhap", "Login")" method="post">
+                    <div class="field-wrap">
+                        <label>
+                            Tài khoản: <span class="req">*</span>
+                        </label>
+                        <input type="text" required name="username" />
+                    </div>
+                    <div class="field-wrap">
+                        <label>
+                            Mật khẩu: <span class="req">*</span>
+                        </label>
+                        <input type="password" required name="password" />
+                    </div>
+                    <button class="button button-block">
+                        <span>Đăng nhập</span>
+                    </button>
+                </form>
+            </div>
+            <div id="signup">
+                <h1>Đăng ký miễn phí</h1>
+                <form action="@Url.Action("SaveRegistration", "Login")" method="post">
+                    <div class="field-wrap">
+                        <label>
+                            Họ và tên<span class="req">*</span>
+                        </label>
+                        <input type="text" required name="TenDocGia" />
+                    </div>
+                    <div class="field-wrap">
+                        <label>
+                            Số điện thoại<span class="req">*</span>
+                        </label>
+                        <input type="tel" required name="SoDienThoai" />
+                    </div>
+                    <div class="field-wrap">
+                        <label>
+                            Email Address<span class="req">*</span>
+                        </label>
+                        <input type="email" required name="Email" />
+                    </div>
+                    <div class="field-wrap">
+                        <label>
+                            Set A Password<span class="req">*</span>
+                        </label>
+                        <input type="password" required name="Passwords" />
+                    </div>
+                    <button class="button button-block">
+                        <span>Đăng ký</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+
+        var $this = $(this),
+            label = $this.prev('label');
+
+        if (e.type === 'keyup') {
+            if ($this.val() === '') {
+                label.removeClass('active highlight');
+            } else {
+                label.addClass('active highlight');
+            }
+        } else if (e.type === 'blur') {
+            if ($this.val() === '') {
+                label.removeClass('active highlight');
+            } else {
+                label.removeClass('highlight');
+            }
+        } else if (e.type === 'focus') {
+
+            if ($this.val() === '') {
+                label.removeClass('highlight');
+            }
+            else if ($this.val() !== '') {
+                label.addClass('highlight');
+            }
+        }
+
+    });
+
+    $('.tab a').on('click', function (e) {
+
+        e.preventDefault();
+
+        $(this).parent().addClass('active');
+        $(this).parent().siblings().removeClass('active');
+
+        target = $(this).attr('href');
+
+        $('.tab-content > div').not(target).hide();
+
+        $(target).fadeIn(600);
+
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        var alert = $("#msgAlert");
+        if (alert.length) {
+            alert.fadeOut(3500, function () {
+                alert.remove();
+            });
+        }
+    });
+</script>
+</html>

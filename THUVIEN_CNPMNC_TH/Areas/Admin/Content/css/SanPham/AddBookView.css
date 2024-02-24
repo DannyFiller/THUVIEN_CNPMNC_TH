@@ -1,0 +1,83 @@
+﻿
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 5% 20px 5%;
+}
+
+h1 {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+}
+form {
+    margin-top: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    background-color: #EB1616;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+    input[type="submit"]:hover {
+        background-color: #ff0000;
+    }
+
+#previewImage {
+    max-width: 200px;
+    max-height: 200px;
+    margin-top: 10px;
+    display: none;
+}
+
+/* Tùy chỉnh nút "Lưu" trong form */
+.form-group {
+    margin-top: 15px;
+}
+
+.col-md-offset-2 {
+    margin-left: 16.66666667%;
+}
+
+.btn {
+    background-color: #EB1616;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+    .btn:hover {
+        background-color: #ff0000;
+    }
+
+    .col-md-12{
+        padding:0px;
+    }

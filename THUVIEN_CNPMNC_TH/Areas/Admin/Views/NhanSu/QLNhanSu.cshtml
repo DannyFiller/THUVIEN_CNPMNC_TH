@@ -1,0 +1,76 @@
+﻿@model IEnumerable<THUVIEN_CNPMNC_TH.Models.ThuThu>
+@{
+    ViewBag.Title = "Danh sách nhân viên và thủ thư";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Areas/Admin/Content/css/NhanSu/QLNhanSu.css" rel="stylesheet" />
+<div class="container">
+    <h1>Danh sách thủ thư:</h1>
+    <table class="table">
+        <tr>
+            <th>Mã thủ thư</th>
+            <th>Tên thủ thư</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Địa chỉ</th>
+            <th>Số điện thoại</th>
+        </tr>
+        @foreach (var thuThu in ViewBag.ThuThuList)
+        {
+            <tr>
+                <td>@thuThu.MaThuThu</td>
+                <td>@thuThu.TenThuThu</td>
+                <td>@(thuThu.NgaySinh?.ToString("dd/MM/yyyy") ?? "")</td>
+                <td>@thuThu.GioiTinh</td>
+                <td>@thuThu.DiaChi</td>
+                <td>@thuThu.SoDienThoai</td>
+            </tr>
+        }
+    </table>
+
+    <h1>Danh sách nhân viên kho:</h1>
+    <table class="table">
+        <tr>
+            <th>Mã nhân viên kho</th>
+            <th>Tên nhân viên kho</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Địa chỉ</th>
+            <th>Số điện thoại</th>
+        </tr>
+        @foreach (var nhanVienKho in ViewBag.NhanVienKhoList)
+        {
+            <tr>
+                <td>@nhanVienKho.MaNhanVienKho</td>
+                <td>@nhanVienKho.TenNhanVienKho</td>
+                <td>@(nhanVienKho.NgaySinh?.ToString("dd/MM/yyyy") ?? "")</td>
+                <td>@nhanVienKho.GioiTinh</td>
+                <td>@nhanVienKho.DiaChi</td>
+                <td>@nhanVienKho.SoDienThoai</td>
+            </tr>
+        }
+    </table>
+
+    <h1>Danh sách nhân viên quản lý độc giả:</h1>
+    <table class="table">
+        <tr>
+            <th>Mã nhân viên quản lý độc giả</th>
+            <th>Tên nhân viên quản lý độc giả</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Địa chỉ</th>
+            <th>Số điện thoại</th>
+        </tr>
+        @foreach (var nhanVienQLDG in ViewBag.NhanVienQLDGList)
+        {
+            <tr>
+                <td>@nhanVienQLDG.MaNhanVienQLDG</td>
+                <td>@nhanVienQLDG.TenNhanVienQLDG</td>
+                <td>@(nhanVienQLDG.NgaySinh?.ToString("dd/MM/yyyy") ?? "")</td>
+                <td>@nhanVienQLDG.GioiTinh</td>
+                <td>@nhanVienQLDG.DiaChi</td>
+                <td>@nhanVienQLDG.SoDienThoai</td>
+            </tr>
+        }
+    </table>
+</div>

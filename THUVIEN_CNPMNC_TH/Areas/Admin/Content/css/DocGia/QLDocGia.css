@@ -1,0 +1,101 @@
+﻿.container {
+    margin: 0;
+    padding: 0;   
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0 30px 0;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: black;
+    font-size:20px;
+}
+
+th {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+}
+
+td{
+    height:70px;
+}
+
+img {
+    max-height: 200px;
+    max-width: 100px;
+}
+
+h1 {
+    margin-top: 20px;
+    color: red;
+    text-align: center;
+}
+
+.action-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+}
+.delete-btn{
+    margin-left:5px;
+}
+.btn-add {
+    background-color: Green;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+
+}
+
+
+/* CSS cho modal */
+.custom-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.modal-buttons button {
+    margin: 5px;
+    border-radius: 10px;
+    width: 100px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+    .modal-buttons button:hover {
+        background-color: red;
+    }

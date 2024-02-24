@@ -1,0 +1,58 @@
+﻿@model THUVIEN_CNPMNC_TH.Models.PhieuNhap
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <link href="~/Areas/Admin/Content/css/Kho/NhapSach.css" rel="stylesheet" />
+
+    <div class="container">
+
+        <h1>NHẬP SÁCH MỚI</h1>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <!-- MaPN không cần nhập, để nó tự động tạo -->
+        @Html.HiddenFor(model => model.MaPN)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaNhanVienKho, "Mã Nhân Viên Kho", htmlAttributes: new { @class = "control-label col-md-10" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.MaNhanVienKho, ViewBag.TenNhanVienKho as SelectList, "-- Chọn tên nhân viên kho--", new { @class = "form-control", id = "TenNhanVienKhoDropdown" })
+                @Html.ValidationMessageFor(model => model.MaNhanVienKho, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TenSach, "Tên Sách", htmlAttributes: new { @class = "control-label col-md-10" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TenSach, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenSach, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SoLuong, "Số Lượng", htmlAttributes: new { @class = "control-label col-md-10" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NgayNhap, "Ngày Nhập", htmlAttributes: new { @class = "control-label col-md-10" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NgayNhap, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                @Html.ValidationMessageFor(model => model.NgayNhap, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<a href="/Admin/Kho/QLKho" class="btn-back">Trở về</a>

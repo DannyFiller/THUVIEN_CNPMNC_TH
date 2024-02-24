@@ -1,0 +1,139 @@
+﻿.container {
+    padding: 20px;
+}
+
+
+h1 {
+    margin-top: 20px;
+    color: red;
+    text-align: center;
+}
+
+form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: #fff; /* Nền trắng */
+    color: #000; /* Chữ nhập màu đen */
+}
+
+input[type="date"] {
+    /* Định dạng màu nền và màu chữ cho input ngày tháng */
+    background-color: #fff;
+    color: #000;
+}
+
+input[type="submit"],
+.save {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel {
+    background-color: #dc3545;
+    margin-left: 10px;
+    display: inline-block;
+    padding: 8px 16px;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.date-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff; /* Nền trắng */
+    color: #000; /* Chữ nhập màu đen */
+}
+
+/* CSS cho trang thêm phiếu mượn trả */
+.form-horizontal {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.btn-default {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 8px 16px;
+}
+
+/* Thêm CSS cho phần validation summary nếu cần */
+.text-danger {
+    color: #dc3545;
+}
+
+/* CSS cho số lượng và năm xuất bản */
+.input-quantity,
+.input-date {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff; /* Nền trắng */
+    color: #000; /* Chữ nhập màu đen */
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #6C7293;
+    background-clip: padding-box;
+    border: 1px solid #000;
+    appearance: none;
+    border-radius: 5px;
+    background-color:white;
+}
+
+.form-control:focus {
+    background-color: white; /* Đặt màu nền cố định khi trường input được focus */
+    color: black; /* Đặt màu chữ cố định khi trường input được focus */
+    /* Các thuộc tính khác nếu cần */
+}
+.btn-back {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    margin-left:30px;
+}

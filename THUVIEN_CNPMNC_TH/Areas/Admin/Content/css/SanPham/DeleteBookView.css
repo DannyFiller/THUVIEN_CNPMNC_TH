@@ -1,0 +1,129 @@
+﻿h1 {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: Black;
+}
+
+th {
+    background-color: red;
+    color: white;
+    font-weight: 900;
+    font-size: 20px;
+}
+
+td {
+    font-size: 18px;
+}
+
+img {
+    max-height: 200px;
+    max-width: 100px;
+}
+
+#searchInput {
+    padding: 8px;
+    border: 2px solid black;
+    border-radius: 4px;
+    margin: 0 0 20px 0;
+    width: 80%;
+    box-sizing: border-box;
+    font-size: 16px;
+    display: block;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+
+
+.edit-btn, .deltail-btn, .delete-btn {
+    background-color: none;
+    border: none;
+    color: red;
+    background-color: transparent;
+}
+
+.add-book {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+}
+
+
+    .add-book:hover {
+        background-color: #0056b3;
+    }
+
+.delete-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+}
+
+    .delete-btn:hover {
+        background-color: darkred;
+    }
+
+
+/* CSS cho modal */
+.custom-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.modal-buttons button {
+    margin: 5px;
+    border-radius: 10px;
+    width: 100px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+    .modal-buttons button:hover {
+        background-color: red;
+    }

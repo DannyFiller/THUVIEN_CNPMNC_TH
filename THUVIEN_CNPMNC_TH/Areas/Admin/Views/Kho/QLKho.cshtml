@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "QLKho";
+}
+
+<link href="~/Areas/Admin/Content/css/Kho/QLKho.css" rel="stylesheet" />
+
+<div class="Content">
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Hãy nhập tên sách bạn muốn tìm kiếm......">
+    </div>
+    <a href="/Admin/Kho/NhapSach" class=btn-add>Nhập sách mới</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Mã phiếu nhập </th>
+                <th>Tên sách</th>
+                <th>Mã nhân viên kho</th>
+                <th>Số lượng</th>
+                <th>Ngày nhập</th>
+                <th>Chỉnh sửa</th>                  
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var PhieuNhap in Model)
+            {
+                <tr>
+                    <td>@PhieuNhap.MaPN</td>
+                    <td>@PhieuNhap.TenSach</td>
+                    <td>@PhieuNhap.MaNhanVienKho</td>
+                    <td>@PhieuNhap.SoLuong</td>
+                    <td>@PhieuNhap.NgayNhap</td>
+                    <td>
+                        <a href="#" class="action-btn delete-phieunhap-btn" data-phieunhap-id="@PhieuNhap.MaPN">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="custom-modal" id="confirmationModal">
+        <div class="modal-content">
+            <h2>Xác nhận xóa sách</h2>
+            <p>Bạn có muốn xóa phiếu nhập này không?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete">Có </button>
+                <button id="cancelDelete">Không</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".delete-phieunhap-btn").on("click", function () {
+            var phieunhapid = $(this).data("phieunhap-id");
+            var confirmationModal = $("#confirmationModal");
+            confirmationModal.css("display", "flex");
+            $("#confirmDelete").on("click", function () {
+                $.ajax({
+                    url: '/Admin/Kho/DeletePhieuNhap',
+                    type: 'POST',
+                    data: { maPN: phieunhapid },
+                    success: function (data) {
+                        if (data.success) {
+                            location.reload();
+                        } else {
+                            alert("Xóa thất bại.");
+                        }
+                    },
+                    error: function () {
+                        alert("Đã xảy ra lỗi trong khi xử lý yêu cầu của bạn.");
+                    }
+                });
+
+                confirmationModal.hide();
+            });
+            // Xử lý nút Hủy
+            $("#cancelDelete").on("click", function () {
+                confirmationModal.hide();
+            });
+        });
+    });
+</script>

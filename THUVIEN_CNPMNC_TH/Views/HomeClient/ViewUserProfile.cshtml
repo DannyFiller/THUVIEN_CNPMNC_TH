@@ -1,0 +1,222 @@
+﻿@model THUVIEN_CNPMNC_TH.Models.ViewModel
+
+@{
+    ViewBag.Title = "ViewUserProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table {
+        width: 60%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        margin-bottom: 50px;
+    }
+
+        .table th, .table td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .table th {
+            text-align: right;
+            background-color: #f2f2f2;
+            width: 20%;
+        }
+
+        .table td {
+            text-align: left;
+        }
+
+    h1 {
+        color: red;
+        text-align: center;
+        margin-top: 100px;
+        font-family: 'Dancing Script', sans-serif;
+        font-size: 60px;
+    }
+
+    .edit-field {
+        display: none;
+    }
+
+    .save-button {
+        display: none;
+    }
+
+    .fa-pencil {
+        cursor: pointer;
+        color: blue;
+    }
+</style>
+<div class="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="~/HomeClient/Index">
+                <img class="logo" src="~/Content/Images/logo.png">
+                <span class="brand-text">PL LIBRARY</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll flex-wrap">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="~/HomeClient/Index">TRANG CHỦ </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/HomeClient/Library">THƯ VIỆN</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            DANH MỤC
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                            <li class="dropdown-submenu" id="theloai-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Thể Loại</a>
+                                <ul class="dropdown-menu" aria-labelledby="theloai-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Kinh Tế" })">Kinh Tế</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Tiểu Thuyết" })">Tiểu Thuyết</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Khoa Học" })">Khoa Học</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu" id="nxb-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Nhà Xuất Bản</a>
+                                <ul class="dropdown-menu" aria-labelledby="nxb-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất bản Hoa Ngữ" })">Nhà Xuất bản Hoa Ngữ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Trẻ" })">Nhà Xuất Bản Trẻ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Tương Lai" })">Nhà Xuất Bản Tương Lai</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <form class="d-flex search-form">
+                    <input class="form-control me-2" type="search" placeholder="Nhập từ khóa bạn cần tìm..." aria-label="Search">
+                    <button class="btn btn-primary" type="submit">Tìm Kiếm</button>
+                </form>
+
+
+                <ul style="--bs-scroll-height: 100px;">
+                    @if (Session["DocGiaRoles"] != null)
+                    {<!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <li class=" dangkythe">
+                                <a class="btn btn-primary" href="@Url.Action("DangKyTheDocGia","HomeClient")">Đăng ký thẻ </a>
+                            </li>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user"></i>
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="@Url.Action("ViewUserProfile","HomeClient")">
+                                        <i class="fas fa-user"></i>
+                                        Thông tin cá nhân
+                                    </a>
+                                    <a class="dropdown-item" href="#" id="logoutButton">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng Xuất
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    <!-- Hiển thị liên kết "Đăng Nhập" khi đã đăng xuất -->
+                    @if (Session["DocGiaRoles"] == null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Login/LoginAndRegistration">ĐĂNG NHẬP</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="search-results">
+    <ul class="search-results-list">
+        <!-- Danh sách kết quả tìm kiếm sẽ được hiển thị ở đây -->
+    </ul>
+</div>
+<h1>Thông Tin Độc Giả</h1>
+@if (Model.DocGias.Count > 0)
+{
+    var docGia = Model.DocGias[0];
+    <form method="post" action="@Url.Action("SaveUserProfile", "HomeClient")">
+        <table class="table">
+            <tr>
+                <th>Mã Độc Giả:</th>
+                <td>@docGia.MaDocGia</td>
+            </tr>
+            <tr>
+                <th>Tên Độc Giả:</th>
+                <td>
+                    <span id="TenDocGia">@docGia.TenDocGia</span>
+                    <i id="TenDocGia-edit-icon" class="fa fa-pencil" onclick="editField('TenDocGia')"></i>
+                    <input id="TenDocGia-edit-field" type="text" class="edit-field" name="DocGias[0].TenDocGia" value="@docGia.TenDocGia" />
+                </td>
+            </tr>
+            <tr>
+                <th>Ngày Sinh:</th>
+                <td>
+                    <span id="NgaySinh">@(docGia.NgaySinh != null ? docGia.NgaySinh.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")</span>
+                    <i id="NgaySinh-edit-icon" class="fa fa-pencil" onclick="editField('NgaySinh')"></i>
+                    <input id="NgaySinh-edit-field" type="text" class="edit-field" name="DocGias[0].NgaySinh" value="@(docGia.NgaySinh != null ? docGia.NgaySinh.Value.ToString("yyyy-MM-dd") : string.Empty)" />
+                </td>
+            </tr>
+            <tr>
+                <th>Giới Tính:</th>
+                <td>
+                    <span id="GioiTinh">@docGia.GioiTinh</span>
+                    <i id="GioiTinh-edit-icon" class="fa fa-pencil" onclick="editField('GioiTinh')"></i>
+                    <input id="GioiTinh-edit-field" type="text" class="edit-field" name="DocGias[0].GioiTinh" value="@docGia.GioiTinh" />
+                </td>
+            </tr>
+            <tr>
+                <th>Địa Chỉ:</th>
+                <td>
+                    <span id="DiaChi">@docGia.DiaChi</span>
+                    <i id="DiaChi-edit-icon" class="fa fa-pencil" onclick="editField('DiaChi')"></i>
+                    <input id="DiaChi-edit-field" type="text" class="edit-field" name="DocGias[0].DiaChi" value="@docGia.DiaChi" />
+                </td>
+            </tr>
+            <tr>
+                <th>Số Điện Thoại:</th>
+                <td>
+                    <span id="SoDienThoai">@docGia.SoDienThoai</span>
+                    <i id="SoDienThoai-edit-icon" class="fa fa-pencil" onclick="editField('SoDienThoai')"></i>
+                    <input id="SoDienThoai-edit-field" type="text" class="edit-field" name="DocGias[0].SoDienThoai" value="@docGia.SoDienThoai" />
+                </td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td>
+                    <span id="Email">@docGia.Email</span>
+                    <i id="Email-edit-icon" class="fa fa-pencil" onclick="editField('Email')"></i>
+                    <input id="Email-edit-field" type="text" class="edit-field" name="DocGias[0].Email" value="@docGia.Email" />
+                </td>
+            </tr>
+        </table>
+        <button type="submit" class="save-button">Lưu</button>
+    </form>
+}
+
+<script>
+    function editField(fieldId) {
+        var field = document.getElementById(fieldId);
+        field.style.display = 'none';
+
+        var editIcon = document.getElementById(fieldId + '-edit-icon');
+        editIcon.style.display = 'none';
+
+        var editField = document.getElementById(fieldId + '-edit-field');
+        editField.style.display = 'block';
+
+        var saveButton = document.querySelector(".save-button");
+        saveButton.style.display = 'block';
+    }
+</script>

@@ -1,0 +1,153 @@
+﻿
+@model THUVIEN_CNPMNC_TH.Models.TheDocGia
+
+@{
+    ViewBag.Title = "Thêm Thẻ Độc Giả";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/TheDocGia/ThemTDG.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Thêm CSS tùy chỉnh -->
+
+<link rel="stylesheet" type="text/css" href="~/Content/Css/Home/Index.css">
+
+<style>
+    .container{
+        margin-top:100px;
+    }
+    h1 {  
+        margin: 20px 0 20px 20px;
+        color: Red;
+        text-align: center;
+    }
+</style>
+<div class="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="~/HomeClient/Index">
+                <img class="logo" src="~/Content/Images/logo.png">
+                <span class="brand-text">PL LIBRARY</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll flex-wrap">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="~/HomeClient/Index" l">TRANG CHỦ </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/HomeClient/Library">THƯ VIỆN</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            DANH MỤC
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                            <li class="dropdown-submenu" id="theloai-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Thể Loại</a>
+                                <ul class="dropdown-menu" aria-labelledby="theloai-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Kinh Tế" })">Kinh Tế</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Tiểu Thuyết" })">Tiểu Thuyết</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Khoa Học" })">Khoa Học</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu" id="nxb-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Nhà Xuất Bản</a>
+                                <ul class="dropdown-menu" aria-labelledby="nxb-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất bản Hoa Ngữ" })">Nhà Xuất bản Hoa Ngữ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Trẻ" })">Nhà Xuất Bản Trẻ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Tương Lai" })">Nhà Xuất Bản Tương Lai</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <form class="d-flex search-form">
+                    <input class="form-control me-2" type="search" placeholder="Nhập từ khóa bạn cần tìm..." aria-label="Search">
+                    <button class="btn btn-primary" type="submit">Tìm Kiếm</button>
+                </form>
+
+
+                <ul style="--bs-scroll-height: 100px;">
+                    @if (Session["DocGiaRoles"] != null)
+                    {<!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+
+                            <li class=" dangkythe">
+                                <a class="btn btn-primary" href="@Url.Action("DangKyTheDocGia","HomeClient")">Đăng ký thẻ </a>
+                            </li>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user"></i>
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="javascript:void(0)" id="infoButton">
+                                        <i class="fas fa-user"></i>
+                                        Thông tin cá nhân
+                                    </a>
+                                    <a class="dropdown-item" href="#" id="logoutButton">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng Xuất
+                                    </a>
+
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    }
+                    <!-- Hiển thị liên kết "Đăng Nhập" khi đã đăng xuất -->
+                    @if (Session["DocGiaRoles"] == null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Login/LoginAndRegistration">ĐĂNG NHẬP</a>
+                        </li>
+                    }
+                </ul>
+
+
+
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <h1>THÊM THẺ ĐỘC GIẢ</h1>
+    @using (Html.BeginForm("LuuTheDocGia", "HomeClient", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NgayCap, "Ngày cấp:", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.NgayCap, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+            @Html.ValidationMessageFor(model => model.NgayCap, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HanSuDung, "Hạn sử dụng:", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("HanSuDungOption", new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Text = "3 tháng", Value = "3" },
+                new SelectListItem { Text = "6 tháng", Value = "6" },
+                new SelectListItem { Text = "1 năm", Value = "12" }
+            }, "Value", "Text"), "-- Chọn thời gian hạn sử dụng --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.HanSuDung, "", new { @class = "text-danger" })
+        </div>
+
+
+
+        <input type="submit" value="Đăng ký" class="btn btn-primary" />
+
+    }
+</div>

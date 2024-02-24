@@ -1,0 +1,169 @@
+﻿@model List<THUVIEN_CNPMNC_TH.Models.PhieuMuonTra>
+
+@{
+    ViewBag.Title = "Danh sách phiếu mượn trả";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .edit-status {
+        text-align: center;
+    }
+
+    .edit-status form {
+        display: inline-block;
+    }
+
+    .edit-status select {
+        padding: 5px;
+        border-radius: 15px;
+    }
+
+    .edit-status button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 15px;
+    }
+
+    .edit-status button:hover {
+        background-color: greenyellow;
+    }
+</style>
+<link href="~/Areas/Admin/Content/css/MuonTra/QLMuonTra.css" rel="stylesheet" />
+<div id="message-container" class="alert alert-danger fixed-top" role="alert" style="z-index:99999 ; text-align:center ; height:70px; font-size:24px ;font-weight:600 ; display:none">
+    <p id="message">Nội dung thông báo sẽ được hiển thị ở đây.</p>
+</div>
+<div class="table-container">
+    <h1>QUẢN LÝ MƯỢN TRẢ SÁCH</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Mã phiếu</th>
+                <th>Mã sách</th>
+                <th>Mã độc giả</th>
+                <th>Mã thủ thư</th>
+                <th>Ngày mượn</th>
+                <th>Trạng thái</th>
+                <th>Ngày trả dự kiến</th>
+                <th>Ngày trả thực tế</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var phieu in Model)
+            {
+                <tr>
+                    <td>@phieu.MaPhieu</td>
+                    <td>@phieu.MaSach</td>
+                    <td>@phieu.MaDocGia</td>
+                    <td>@phieu.MaThuThu</td>
+                    <td>@(phieu.NgayMuon.HasValue ? phieu.NgayMuon.Value.ToString("dd/MM/yyyy") : "")</td>
+
+                    <td>@phieu.TrangThai</td>
+
+                    <td>@(phieu.NgayTraDuKien.HasValue ? phieu.NgayTraDuKien.Value.ToString("dd/MM/yyyy") : "")</td>
+                    <td>@(phieu.NgayTraThucTe.HasValue ? phieu.NgayTraThucTe.Value.ToString("dd/MM/yyyy") : "")</td>
+
+                    <td>
+                        @if (phieu.TrangThai == "Đang đăng ký")
+                        {
+                            <a href="/Admin/MuonTra/DuyetPhieu?id=@phieu.MaPhieu" class="btn btn-success">Duyệt</a>
+                            <a href="#" class="action-btn delete-btn" data-phieu-id="@phieu.MaPhieu">Xóa</a>
+                        }
+                        else if (phieu.TrangThai == "Đang Mượn")
+                        {
+                            <a href="/Admin/MuonTra/TraSach?id=@phieu.MaPhieu" class="btn btn-success">Trả sách</a>
+                        }
+                        else if (phieu.TrangThai == "Đã Trả")
+                        {
+                            if ((phieu.NgayTraThucTe.Value - phieu.NgayTraDuKien.Value).Days > 1)
+                            {
+                                <a href="/Admin/MuonTra/ThemPhieuPhat?id=@phieu.MaPhieu" class="btn btn-danger">Phạt</a>
+                            }
+
+                            else if ((phieu.NgayTraThucTe.Value - phieu.NgayTraDuKien.Value).Days <= 0)
+                            {
+                                <a href="#" class="action-btn delete-btn" data-phieu-id="@phieu.MaPhieu">Xóa</a>
+                            }
+                        }
+                        @if (phieu.TrangThai == "Đã Phạt")
+                        {
+                            <a href="#" class="action-btn delete-btn" data-phieu-id="@phieu.MaPhieu">Xóa</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="/Admin/MuonTra/ThemMuonTra" class="btn-add">Thêm phiếu mượn trả</a>
+
+    <div class="custom-modal" id="confirmationModal">
+        <div class="modal-content">
+            <h2>Xác nhận xóa phiếu mượn trả</h2>
+            <p>Bạn có muốn xóa phiếu mượn trả này không?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete">Có</button>
+                <button id="cancelDelete">Không</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".delete-btn").on("click", function () {
+            var phieuId = $(this).data("phieu-id");
+            var confirmationModal = $("#confirmationModal");
+
+            confirmationModal.css("display", "flex");
+        });
+
+        $("#confirmDelete").on("click", function () {
+            var phieuId = $(".delete-btn").data("phieu-id");
+            $.ajax({
+                url: '/Admin/MuonTra/XoaPhieuMuonTra',
+                type: 'POST',
+                data: { id: phieuId },
+                success: function (data) {
+                    if (data.success) {
+                        $("#message").text(data.message);
+                        $("#message-container").show();
+
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        $("#message").text(data.message);
+                        $("#message-container").show();
+                    }
+                },
+                error: function () {
+                    alert("Đã xảy ra lỗi trong khi xử lý yêu cầu của bạn.");
+                }
+            });
+
+            // Đóng modal sau khi xác nhận
+            $("#confirmationModal").hide();
+        });
+
+        // Xử lý nút Hủy
+        $("#cancelDelete").on("click", function () {
+            // Đóng modal khi hủy
+            $("#confirmationModal").hide();
+        });
+
+        var alert = $("#message-container");
+        if (alert.length) {
+            setTimeout(function () {
+                alert.fadeOut(1000, function () {
+                    alert.remove();
+                });
+            }, 3500);
+        }
+    });
+</script>
+
+
+

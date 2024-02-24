@@ -1,0 +1,30 @@
+﻿@model THUVIEN_CNPMNC_TH.Models.PhieuPhat
+
+@{
+    ViewBag.Title = "ThemPhieuPhat";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Areas/Admin/Content/css/MuonTra/ThemMuonTra.css" rel="stylesheet" />
+<div class="container">
+    <h1>THÊM PHIẾU PHẠT</h1>
+    @using (Html.BeginForm("ThemPhieuPhat", "MuonTra", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.MaPhieuPhat)
+        @Html.HiddenFor(model => model.MaPhieuMuon) 
+
+        <label for="SoNgayTre">Mã phiếu mượn:</label><br>
+        @Html.TextBoxFor(model => model.MaPhieuMuon, new { id = "MaPhieuMuon" })<br>
+
+        <label for="SoNgayTre">Số ngày trễ:</label><br>
+        @Html.TextBoxFor(model => model.SoNgayTre, new { id = "SoNgayTre" })<br>
+
+        <label for="NgayPhat">Ngày phạt:</label><br>
+        @Html.TextBoxFor(model => model.NgayPhat, new { id = "NgayPhat", type = "date" })<br>
+
+        <label for="SoTienPhat">Số tiền phạt:</label><br>
+        @Html.TextBoxFor(model => model.SoTienPhat, new { id = "SoTienPhat" })<br>
+
+        <input type="submit" value="Lưu" class="btn btn-default" />
+    }
+</div>

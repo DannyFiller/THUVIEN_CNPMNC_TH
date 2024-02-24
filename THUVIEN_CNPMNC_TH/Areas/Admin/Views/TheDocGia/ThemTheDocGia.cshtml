@@ -1,0 +1,44 @@
+﻿@model THUVIEN_CNPMNC_TH.Models.TheDocGia
+@{
+    ViewBag.Title = "Thêm Thẻ Độc Giả";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/TheDocGia/ThemTDG.css" rel="stylesheet" />
+<div class="container">
+    <h1>THÊM THẺ ĐỘC GIẢ</h1>
+    @using (Html.BeginForm("LuuTheDocGia", "TheDocGia", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaDocGia, "Tên độc giả:", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("MaDocGia", ViewBag.ListTenDocGia as SelectList, "-- Chọn độc giả --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MaDocGia, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NgayCap, "Ngày cấp:", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.NgayCap, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+            @Html.ValidationMessageFor(model => model.NgayCap, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HanSuDung, "Hạn sử dụng:", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("HanSuDungOption", new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Text = "3 tháng", Value = "3" },
+                new SelectListItem { Text = "6 tháng", Value = "6" },
+                new SelectListItem { Text = "1 năm", Value = "12" }
+            }, "Value", "Text"), "-- Chọn thời gian hạn sử dụng --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.HanSuDung, "", new { @class = "text-danger" })
+        </div>
+
+
+
+        <input type="submit" value="Thêm" class="btn btn-primary" />
+    }
+</div>
+
+

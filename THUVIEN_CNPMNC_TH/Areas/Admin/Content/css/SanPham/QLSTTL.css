@@ -1,0 +1,64 @@
+﻿.content-book {
+    padding: 0 20px 0 20px;
+    margin: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: black;
+}
+
+th {
+    background-color: red;
+    color: white;
+    font-weight: 900;
+    font-size: 20px;
+}
+
+img {
+    max-height: 200px;
+    max-width: 100px;
+}
+
+.selected {
+    margin: 10px 0 20px 0;
+    color: black;
+}
+
+label {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+}
+
+.selected h1 {
+    margin-top: 20px;
+    color: red;
+    text-align: center;
+}
+
+select {
+    font-size: 18px;
+}
+
+.selected {
+    margin-bottom: 10px;
+}
+
+.action-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+}

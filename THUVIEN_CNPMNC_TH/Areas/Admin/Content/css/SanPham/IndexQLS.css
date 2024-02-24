@@ -1,0 +1,60 @@
+﻿
+.Title {
+    text-align: center;
+    color: red;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+img {
+    width: 100%;
+    margin-left: 5%;
+}
+
+
+input[type="submit"] {
+    background-image: linear-gradient(to right, #4CAF50, #45A344, #3B9339, #31832F);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: background-image 0.5s;
+}
+
+input[type="submit"]:hover {
+    background-image: linear-gradient(to right, #00ff00, #33cc33, #66cc66, #cc9966, #ff3333);
+}
+
+
+.container.quanlysach {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: auto;
+
+}
+
+.col-3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #93DEFF;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5%;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}

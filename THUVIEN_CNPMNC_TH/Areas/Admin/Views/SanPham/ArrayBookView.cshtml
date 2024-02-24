@@ -1,0 +1,171 @@
+﻿<link href="~/Areas/Admin/Content/css/SanPham/ArrayBookView.css" rel="stylesheet" />
+<style>
+    .name{
+        width:300px;
+    }
+</style>
+<div class="Content">
+
+    <div class="search-container">
+        <select id="searchType">
+            <option value="tenSach">Tìm theo tên sách</option>
+            <option value="tacGia">Tìm theo tên tác giả</option>
+            <option value="nhaXuatBan">Tìm theo tên nhà xuất bản</option>
+        </select>
+        <input type="text" id="searchInput" placeholder="Hãy nhập thông tin bạn muốn tìm kiếm......">
+        <select id="sortType">
+            <option value="none">-- Lọc sách -- </option>
+            <option value="defaul">Mặc đinh </option>
+            <option value="asc">Mượn nhiều </option>
+            <option value="dec">Mượn ít </option>
+        </select>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Mã sách</th>
+                <th class="name">Tên sách</th>
+                <th>Ảnh</th>
+                <th>Tác giả</th>
+                <th>Số lượng</th>
+                <th>NXB</th>
+                <th>Trạng thái</th>
+                <th>Lượt</th>
+                <th>Chỉnh sửa</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.MaSach</td>
+                    <td class="name">@book.TenSach</td>
+                    <td><img src="@Url.Content(book.HinhAnh)" alt="Book Image" /></td>
+                    <td>@book.TacGia</td>
+                    <td>@book.SoLuong</td>
+                    <td>@book.NhaXuatBan.TenNXB</td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" class="toggleTrungBay" id="toggle_@book.MaSach" @(book.TrungBay == true ? "checked" : "") data-book-id="@book.MaSach">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                    <td>@book.LuotMuonTra</td>
+                    <td>
+                        <a href="/Admin/SanPham/EditBookView?MaSach=@book.MaSach" class="action-btn edit-btn">Edit</a>
+                        <a href="/Admin/SanPham/DetailBookView?MaSach=@book.MaSach" class="action-btn detail-btn">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function removeDiacritics(text) {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+    $(document).ready(function () {
+        $("#searchInput").on("input", function () {
+            var searchText = removeDiacritics($(this).val().toLowerCase());
+            $("tbody tr").each(function () {
+                var bookName = removeDiacritics($(this).find("td:eq(1)").text().toLowerCase());
+                if (bookName.includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("input", function () {
+            var searchText = removeDiacritics($(this).val().toLowerCase());
+            var searchType = $("#searchType").val(); 
+            $("tbody tr").each(function () {
+                var cellValue = removeDiacritics($(this).find("td:eq(1)").text().toLowerCase());
+                switch (searchType) {
+                    case "tenSach":
+                        cellValue = removeDiacritics($(this).find("td:eq(1)").text().toLowerCase()); // Tìm theo tên sách
+                        break;
+                    case "tacGia":
+                        cellValue = removeDiacritics($(this).find("td:eq(3)").text().toLowerCase()); // Tìm theo tên tác giả
+                        break;
+                    case "nhaXuatBan":
+                        cellValue = removeDiacritics($(this).find("td:eq(5)").text().toLowerCase()); // Tìm theo tên nhà xuất bản
+                        break;
+                }
+                if (cellValue.includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+
+
+    $(document).ready(function () {
+        $(".toggleTrungBay").on("change", function () {
+            var bookId = $(this).data("book-id");
+            var isChecked = $(this).prop("checked");
+            $.ajax({
+                url: '/Admin/SanPham/UpdateTrungBay', 
+                type: 'POST',
+                data: { maSach: bookId, isChecked: isChecked },
+                success: function (result) {
+                    if (result.success) {
+                    } else {
+                    }
+                },
+                error: function () {
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $(".toggleTrungBay").on("change", function () {
+        });
+    });
+
+    $(document).ready(function () {
+        // Lưu danh sách gốc của các hàng trong bảng để khôi phục sắp xếp mặc định
+        var originalRows = $("tbody tr").toArray();
+
+        $("#sortType").on("change", function () {
+            var selectedOption = $(this).val();
+            var $tbody = $("tbody");
+
+            if (selectedOption === "asc") {
+                // Sắp xếp danh sách sách theo thứ tự giảm dần của book.LuotMuonTra
+                var $rows = $tbody.find("tr").toArray();
+                $rows.sort(function (a, b) {
+                    var aLuotMuon = parseInt($(a).find("td:eq(7)").text()); // Lấy giá trị lượt mượn từ cột thứ 7
+                    var bLuotMuon = parseInt($(b).find("td:eq(7)").text()); // Lấy giá trị lượt mượn từ cột thứ 7
+                    return bLuotMuon - aLuotMuon; // Sắp xếp giảm dần
+                });
+                $tbody.empty().append($rows);
+            } else if (selectedOption === "dec") {
+                // Sắp xếp danh sách sách theo thứ tự tăng dần của book.LuotMuonTra
+                var $rows = $tbody.find("tr").toArray();
+                $rows.sort(function (a, b) {
+                    var aLuotMuon = parseInt($(a).find("td:eq(7)").text()); // Lấy giá trị lượt mượn từ cột thứ 7
+                    var bLuotMuon = parseInt($(b).find("td:eq(7)").text()); // Lấy giá trị lượt mượn từ cột thứ 7
+                    return aLuotMuon - bLuotMuon; // Sắp xếp tăng dần
+                });
+                $tbody.empty().append($rows);
+            } else if (selectedOption === "defaul") {
+                // Khôi phục sắp xếp mặc định bằng cách sử dụng danh sách ban đầu
+                $tbody.empty().append(originalRows);
+            }
+        });
+    });
+
+
+
+</script>

@@ -1,0 +1,164 @@
+﻿@model THUVIEN_CNPMNC_TH.Models.PhieuMuonTra
+
+@{
+    ViewBag.Title = "Đăng ký Sách";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<link href="~/Content/Css/Home/DangKySach.css" rel="stylesheet" />
+<div class="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="~/HomeClient/Index">
+                <img class="logo" src="~/Content/Images/logo.png">
+                <span class="brand-text">PL LIBRARY</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll flex-wrap">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="~/HomeClient/Index" l">TRANG CHỦ </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/HomeClient/Library">THƯ VIỆN</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            DANH MỤC
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                            <li class="dropdown-submenu" id="theloai-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Thể Loại</a>
+                                <ul class="dropdown-menu" aria-labelledby="theloai-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Kinh Tế" })">Kinh Tế</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Tiểu Thuyết" })">Tiểu Thuyết</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Khoa Học" })">Khoa Học</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu" id="nxb-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Nhà Xuất Bản</a>
+                                <ul class="dropdown-menu" aria-labelledby="nxb-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất bản Hoa Ngữ" })">Nhà Xuất bản Hoa Ngữ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Trẻ" })">Nhà Xuất Bản Trẻ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Tương Lai" })">Nhà Xuất Bản Tương Lai</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <form class="d-flex search-form">
+                    <input class="form-control me-2" type="search" placeholder="Nhập từ khóa bạn cần tìm..." aria-label="Search">
+                    <button class="btn btn-primary" type="submit">Tìm Kiếm</button>
+                </form>
+
+
+                <ul style="--bs-scroll-height: 100px;">
+                    @if (Session["DocGiaRoles"] != null)
+                    {<!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <li class=" dangkythe">
+                                <a class="btn btn-primary" href="@Url.Action("DangKyTheDocGia","HomeClient")">Đăng ký thẻ </a>
+                            </li>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user"></i>
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="@Url.Action("ViewUserProfile","HomeClient")">
+                                        <i class="fas fa-user"></i>
+                                        Thông tin cá nhân
+                                    </a>
+                                    <a class="dropdown-item" href="#" id="logoutButton">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng Xuất
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    <!-- Hiển thị liên kết "Đăng Nhập" khi đã đăng xuất -->
+                    @if (Session["DocGiaRoles"] == null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Login/LoginAndRegistration">ĐĂNG NHẬP</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="search-results">
+    <ul class="search-results-list">
+        <!-- Danh sách kết quả tìm kiếm sẽ được hiển thị ở đây -->
+    </ul>
+</div>
+<div class="row dangkysach">
+    <h1>Đăng ký Sách</h1>
+    <div class="col-lg-6 book-details">
+        <img src="@Url.Content(ViewBag.HinhAnh)" alt="Ảnh sách" />
+        <h4>Tên Sách: @ViewBag.TenSach</h4>
+
+    </div>
+    @*<div id="phieuMuonTraCount">
+        Số lượng phiếu mượn trả chưa trả: @ViewBag.CountUnreturnedPhieuMuonTra
+    </div>*@
+    <div class="col-lg-6">
+        @using (Html.BeginForm("DangKySach", "HomeClient", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(model => model.MaSach)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NgayMuon, "Ngày Mượn:")
+                @Html.TextBoxFor(model => model.NgayMuon, new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.NgayMuon)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NgayTraDuKien, "Ngày Trả Dự Kiến:")
+                @Html.TextBoxFor(model => model.NgayTraDuKien, new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.NgayTraDuKien)
+            </div>
+            <div id="error-message" style="color: red;"></div>
+            <div class="form-group">
+                <input type="submit" value="Đăng ký" class="btn-dangky" />
+            </div>
+        }
+    </div>
+
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var ngayMuonInput = document.getElementById("NgayMuon");
+        var ngayTraDuKienInput = document.getElementById("NgayTraDuKien");
+        var errorDiv = document.getElementById("error-message");
+
+        ngayTraDuKienInput.addEventListener("change", function () {
+            var ngayMuon = new Date(ngayMuonInput.value);
+            var ngayTraDuKien = new Date(ngayTraDuKienInput.value);
+            var differenceInDays = (ngayTraDuKien - ngayMuon) / (1000 * 60 * 60 * 24);
+
+            if (differenceInDays > 15) {
+                errorDiv.textContent = "Ngày trả dự kiến không được vượt quá 15 ngày so với ngày mượn.";
+                ngayTraDuKienInput.value = ""; // Xóa ngày trả đã chọn
+            } else {
+                errorDiv.textContent = "";
+            }
+        });
+    });
+</script>

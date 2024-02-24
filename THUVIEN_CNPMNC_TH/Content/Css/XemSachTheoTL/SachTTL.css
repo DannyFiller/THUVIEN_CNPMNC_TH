@@ -1,0 +1,548 @@
+﻿/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+}
+
+.navbar {
+    padding: 0;
+}
+
+/* Ẩn chữ "LIBRARY" mặc định */
+.brand-text {
+    display: none;
+}
+
+/* Hiển thị chữ "LIBRARY" trên màn hình có chiều rộng nhỏ hơn 768px */
+@media (max-width: 768px) {
+    .brand-text {
+        display: inline; /* Hiển thị khi màn hình thu nhỏ */
+    }
+}
+
+.header .container-fluid {
+    background-color: white;
+    padding: 0 30px 0 20px;
+    background: linear-gradient(to right, white, #f3a12c, white);
+    z-index: 999;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+.nav-item {
+    list-style: none;
+}
+
+    .nav-item a {
+        font-size: 28px;
+        font-weight: bold;
+        color: black;
+        font-family: 'Dancing Script', sans-serif;
+    }
+
+        .nav-item a:hover {
+            color: green;
+        }
+
+.form-control {
+    width: 300px;
+    border: 2px black solid;
+}
+
+.btn-outline-success {
+    border: 2px black solid;
+    color: black;
+    font-weight: bold;
+}
+
+.user {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid black;
+    margin-left: 100px;
+}
+
+.fa-regular.fa-user {
+    font-size: 1.5rem;
+}
+
+.col {
+    padding: 0px;
+}
+
+/* Thiết lập cho sidebar */
+.banner {
+    margin-top: 7rem;
+}
+
+.carousel-item img {
+    height: 600px;
+    padding: 0 10px 0 10px;
+}
+
+p.title-content {
+    font-family: 'Dancing Script', sans-serif;
+    font-size: 46px;
+    font-weight: bolder;
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Card */
+
+.content .cate-book {
+    margin: 0px 20px 0px 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.cate-book .book-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+}
+
+.book-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    max-width: 100%;
+    border: 2px black solid;
+    border-radius: 10px;
+    background-color: #f3a12c;
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.36), 0 10px 16px rgba(0, 0, 0, 0.53);
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+
+    .book-card .book-card__cover {
+        position: relative;
+        width: 200px;
+        height: 300px;
+        margin: 0 auto 8px auto;
+        perspective: 1000px;
+    }
+
+    .book-card .book-card__book {
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: all 250ms ease;
+    }
+
+    .book-card .book-card__book-front {
+        position: absolute;
+        height: 100%;
+    }
+
+    .book-card .book-card__book-back {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        transform: translateZ(-40px);
+    }
+
+    .book-card .book-card__book-side {
+        position: absolute;
+        top: 5px;
+        bottom: 2px;
+        right: -29px;
+        width: 40px;
+        background-size: 5px;
+        background-color: #e1e1e1;
+        background-image: linear-gradient(to right, #ccc 35%, #e1e1e1 35%);
+        opacity: 0;
+        transform: rotate3d(0, 1, 0, 90deg);
+    }
+
+    .book-card .book-card__img {
+        margin-top: 10px;
+        max-width: 100%;
+        height: 300px;
+        background-color: #e1e1e1;
+    }
+
+    .book-card .book-card__title {
+        font-size: 1.5em;
+        margin-bottom: 8px;
+        color: white;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+
+    .book-card .book-card__author {
+        color: #757575;
+        font-size: 1em;
+    }
+
+    .book-card:hover .book-card__book {
+        transform: rotate3d(0, -1, 0, 25deg) translate(-15px, -30px);
+    }
+
+    .book-card:hover .book-card__book-back {
+        box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.35);
+    }
+
+    .book-card:hover .book-card__book-side {
+        opacity: 1;
+    }
+
+    /* button */
+    .book-card button {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        background: #FFD401;
+        font-family: "Montserrat", sans-serif;
+        box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        border: none;
+        width: 100%;
+        height: auto;
+        margin: 10px 0 10px 0;
+    }
+
+        .book-card button:after {
+            content: " ";
+            width: 0%;
+            height: 100%;
+            background: green;
+            position: absolute;
+            transition: all 0.4s ease-in-out;
+            right: 0;
+        }
+
+        .book-card button:hover::after {
+            right: auto;
+            left: 0;
+            width: 100%;
+        }
+
+        .book-card button span {
+            text-align: center;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            z-index: 20;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .book-card button:hover span {
+            color: white;
+            animation: scaleUp 0.3s ease-in-out;
+        }
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.cate-book .book-card {
+    background-color: #183153;
+}
+
+.cate-book .book-card__title {
+    color: white;
+    height: 65px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cate-book {
+    margin: 20px;
+}
+
+    .cate-book .title-cate-book {
+        margin: 40px 0 0 0;
+        font-family: 'Dancing Script', sans-serif;
+        font-size: 32px;
+        font-weight: bolder;
+        color: red;
+        margin-bottom: 20px;
+        margin-top:100px;
+        text-transform:uppercase;
+        text-align:center;
+        
+    }
+
+    .cate-book .row:not(:last-child) {
+        border-bottom: 2px red solid;
+    }
+
+/* footer */
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.footer-section {
+    background: #151414;
+    position: relative;
+}
+
+.footer-cta {
+    border-bottom: 1px solid #373636;
+}
+
+.single-cta i {
+    color: #ff5e14;
+    font-size: 30px;
+    float: left;
+    margin-top: 8px;
+}
+
+.cta-text {
+    padding-left: 15px;
+    display: inline-block;
+}
+
+    .cta-text h4 {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 600;
+        margin bottom: 2px;
+    }
+
+    .cta-text span {
+        color: #757575;
+        font-size: 15px;
+    }
+
+.footer-content {
+    position: relative;
+    z-index: 2;
+}
+
+.footer-pattern img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 330px;
+    background-size: cover;
+    background-position: 100% 100%;
+}
+
+.footer-logo {
+    margin-bottom: 30px;
+}
+
+    .footer-logo img {
+        max-width: 200px;
+    }
+
+.footer-text p {
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: #7e7e7e;
+    line-height: 28px;
+}
+
+.footer-social-icon span {
+    color: #fff;
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 20px;
+}
+
+.footer-social-icon a {
+    color: #fff;
+    font-size: 16px;
+    margin-right: 15px;
+}
+
+.footer-social-icon i {
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 38px;
+    border-radius: 50%;
+}
+
+.facebook-bg {
+    background: #3B5998;
+}
+
+.twitter-bg {
+    background: #55ACEE;
+}
+
+.google-bg {
+    background: #DD4B39;
+}
+
+.footer-widget-heading h3 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+    .footer-widget-heading h3::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -15px;
+        height: 2px;
+        width: 50px;
+        background: #ff5e14;
+    }
+
+.footer-widget ul li {
+    display: inline-block;
+    width: 50%;
+    margin-bottom: 12px;
+}
+
+    .footer-widget ul li a:hover {
+        color: #ff5e14;
+    }
+
+    .footer-widget ul li a {
+        color: #878787;
+        text-transform: capitalize;
+    }
+
+.subscribe-form {
+    position: relative;
+    overflow: hidden;
+}
+
+    .subscribe-form input {
+        width: 100%;
+        padding: 14px 28px;
+        background: #2E2E2E;
+        border: 1px solid #2E2E2E;
+        color: #fff;
+    }
+
+    .subscribe-form button {
+        position: absolute;
+        right: 0;
+        background: #ff5e14;
+        padding: 13px 20px;
+        border: 1px solid #ff5e14;
+        top: 0;
+    }
+
+        .subscribe-form button i {
+            color: #fff;
+            font-size: 22px;
+            transform: rotate(-6deg);
+        }
+
+.copyright-area {
+    padding: 25px 0;
+    background: linear-gradient(to right, white, #f3a12c, #f3a12c, white);
+}
+
+.copyright-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #000000;
+}
+
+copyright-text p a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+footer-menu li {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+    footer-menu li:hover a {
+        color: #ffffff;
+    }
+
+    footer-menu li a {
+        font-size: 14px;
+        color: #000000;
+    }
+
+.dropdown-submenu .dropdown-toggle::after {
+    border-right: none;
+    border-left: .3em solid;
+    border-top: .3em solid transparent;
+    border-bottom: .3em solid transparent;
+    left: 1rem; /* Điều chỉnh vị trí của mũi tên */
+}
+
+/* Đảm bảo các mục con hiển thị ở bên trái cho dropdown "Thể Loại" */
+.dropdown-submenu#theloai-dropdown .dropdown-menu {
+    left: 100%;
+    top: 25%;
+    right: auto;
+}
+
+/* Đảm bảo các mục con hiển thị ở bên trái cho dropdown "Nhà Xuất Bản" */
+.dropdown-submenu#nxb-dropdown .dropdown-menu {
+    left: 100%;
+    top: calc(25% + 42px); /* Thêm 42px vào top */
+    right: auto;
+}
+
+/* Search */
+.search-results {
+    position: fixed;
+    top: 5em;
+    left: 57rem;
+    z-index: 1001;
+    background-color: white;
+    padding: 10px;
+    max-height: 80vh;
+    overflow-y: auto;
+    width: calc(100% - 50rem);
+    border: none;
+}
+
+.search-results-list {
+    list-style-type: none;
+    padding: 0;
+    font-size: 20px;
+}
+
+    .search-results-list li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .search-results-list img {
+        width: 70px;
+        height: 100px;
+        margin-right: 10px;
+    }
+
+.details {
+    text-decoration: none;
+}

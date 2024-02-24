@@ -1,0 +1,105 @@
+﻿@model THUVIEN_CNPMNC_TH.Models.ViewModel
+@{
+    ViewBag.Title = "Index";
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div id="msgAlert" class="alert alert-danger fixed-top" role="alert" style="z-index:99999 ; text-align:center ; height:70px; font-size:24px ;font-weight:600">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div id="msgAlert" class="alert alert-success fixed-top" role="alert" style="z-index: 99999; text-align: center; height: 70px; font-size: 24px; font-weight: 600 ">
+        @ViewBag.SuccessMessage
+    </div>
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="~/Areas/Admin/Content/css/Home/Index.css" rel="stylesheet" />
+<div class="ContentHome ">
+    <div class="row justify-content-center ">
+        <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                SỐ LƯỢNG SÁCH
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold">@Model.Books.Count()</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-solid fa-bookmark fa-2xl" style="color: #005eff;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                SỐ LƯỢNG ĐỘC GIẢ
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.DocGias.Count()</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-solid fa-user fa-2xl" style="color: #005eff;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                SỐ SÁCH ĐÃ CHO MƯỢN
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold">@Model.SoSachMuons</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-solid fa-bookmark fa-2xl" style="color: #005eff;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                SỐ THẺ ĐỘC GIẢ
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TheDocGias.Count()</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-regular fa-credit-card fa-2xl" style="color: #005eff;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var alert = $("#msgAlert");
+        if (alert.length) {
+            alert.fadeOut(3500, function () {
+                alert.remove();
+            });
+        }
+    });
+</script>

@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+        <link rel="stylesheet" type="text/css" href="~/areas/admin/content/css/login/login.css">
+    @*<link rel="stylesheet" type="text/css" href="~/Content/Css/Login/Login.css"*@
+</head>
+<body>
+    <form action="@Url.Action("KiemTraDangNhap", "Login")" method="post">
+            <div class="container">
+                <h1>ĐĂNG NHẬP</h1>
+                <div class="form-group">
+                    <label for="username">Tên đăng nhập:</label>
+                    <input type="text" class="form-control" required name="username" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" class="form-control" required name="password" />
+                </div>
+                <button type="submit" class="btn btn-primary">Đăng nhập</button>
+
+                <div class="message">
+                    <p>Chưa có tài khoản? <a href="@Url.Action("DangKy", "Register")">Đăng ký</a></p>
+                </div>
+                <div class="error-message">
+                    @ViewBag.ErrorMessage
+                </div>
+            </div>
+        </form>
+    @*<div class="login-box">
+        <h2>ĐĂNG NHẬP</h2>
+        <form action="@Url.Action("KiemTraDangNhap", "Login")" method="post">
+            <div class="user-box">
+                <input type="text" required name="username" />
+                <label>Tên đăng nhập:</label>
+            </div>
+            <div class="user-box">
+                <input type="password" required name="password" />
+                <label>Mật khẩu:</label>
+            </div>
+            <button  type="submit" >
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                ĐĂNG NHẬP
+            </button>
+        </form>
+    </div>*@
+</body>
+</html>

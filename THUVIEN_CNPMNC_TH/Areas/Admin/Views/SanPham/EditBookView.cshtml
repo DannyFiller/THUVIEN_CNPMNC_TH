@@ -1,0 +1,52 @@
+﻿@model THUVIEN_CNPMNC_TH.Models.Book
+@{
+    ViewBag.Title = "EditBookView";
+}
+
+<link href="~/Areas/Admin/Content/css/SanPham/Editbook.css" rel="stylesheet" />
+
+<div class="container">
+    <h1>SỬA SÁCH</h1>
+    @using (Html.BeginForm("EditBook", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.MaSach)
+
+        <label for="namebook">Tên sách:</label><br>
+        @Html.TextBoxFor(model => model.TenSach, new { id = "namebook" })<br>
+
+        <label for="author">Tác giả:</label><br>
+        @Html.TextBoxFor(model => model.TacGia, new { id = "author" })<br>
+
+        <label for="publisher">Nhà xuất bản:</label><br>
+        @Html.DropDownListFor(model => model.MaNXB, ViewBag.NhaXuatBanList as SelectList, "-- Chọn Nhà xuất bản --", new { id = "publisher" })<br>
+
+        <label for="year">Năm xuất bản:</label><br>
+        @Html.TextBoxFor(model => model.NamXuatBan, new { id = "year" })<br>
+
+        <label for="quantity">Số lượng:</label><br>
+        @Html.TextBoxFor(model => model.SoLuong, new { id = "quantity" })<br>
+
+        <label for="image">Hình ảnh:</label><br>
+        <input type="file" id="image" name="image">
+        <img id="previewImage" src="@Url.Content(Model.HinhAnh)" alt="Hình ảnh sẽ được hiển thị ở đây"><br><br>
+
+        <input type="submit" value="Lưu">
+    }
+    <script>
+        // Lắng nghe sự kiện khi người dùng chọn tệp hình ảnh
+        document.getElementById("image").addEventListener("change", function () {
+            var previewImage = document.getElementById("previewImage");
+            var fileInput = this;
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    // Hiển thị hình ảnh đã chọn
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = "block"; // Hiển thị hình ảnh sau khi đã chọn tệp
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        });
+    </script>
+</div>

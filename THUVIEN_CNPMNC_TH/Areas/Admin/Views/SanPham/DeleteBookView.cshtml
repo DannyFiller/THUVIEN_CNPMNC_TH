@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "DeleteBookView";
+}
+
+<link href="~/Areas/Admin/Content/css/SanPham/DeleteBookView.css" rel="stylesheet" />
+
+<div class="Content">
+    <h1> XÓA SÁCH </h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Hãy nhập tên sách bạn muốn tìm kiếm......">
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Mã sách</th>
+                <th>Tên sách</th>
+                <th>Ảnh</th>
+                <th>Tác giả</th>
+                <th>Số lượng</th>
+                <th>Nhà xuất bản</th>
+                <th>Chỉnh sửa</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.MaSach</td>
+                    <td>@book.TenSach</td>
+                    <td><img src="@Url.Content(book.HinhAnh)" alt="Book Image" /></td>
+                    <td>@book.TacGia</td>
+                    <td>@book.SoLuong</td>
+                    <td>@book.NhaXuatBan.TenNXB</td>
+                    <td>
+                        <a href="#" class="action-btn delete-btn" data-book-id="@book.MaSach">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="custom-modal" id="confirmationModal">
+        <div class="modal-content">
+            <h2>Xác nhận xóa sách</h2>
+            <p>Bạn có muốn xóa sách này không?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete">Có </button>
+                <button id="cancelDelete">Không</button>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function removeDiacritics(text) {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    $(document).ready(function () {
+        $(".delete-btn").on("click", function () {
+            var bookId = $(this).data("book-id");
+            var confirmationModal = $("#confirmationModal");
+
+            // Hiển thị modal
+            confirmationModal.css("display", "flex");
+
+            // Xử lý nút Xác nhận
+            $("#confirmDelete").on("click", function () {
+                $.ajax({
+                    url: '/Admin/SanPham/DeleteBook',
+                    type: 'POST',
+                    data: { MaSach: bookId },
+                    success: function (data) {
+                        if (data.success) {
+                            location.reload();
+                        } else {
+                            alert("Xóa thất bại.");
+                        }
+                    },
+                    error: function () {
+                        alert("Đã xảy ra lỗi trong khi xử lý yêu cầu của bạn.");
+                    }
+                });
+
+                // Đóng modal sau khi xác nhận
+                confirmationModal.hide();
+            });
+
+            // Xử lý nút Hủy
+            $("#cancelDelete").on("click", function () {
+                // Đóng modal khi hủy
+                confirmationModal.hide();
+            });
+        });
+
+
+        $("#searchInput").on("input", function () {
+            var searchText = removeDiacritics($(this).val().toLowerCase());
+            $("tbody tr").each(function () {
+                var bookName = removeDiacritics($(this).find("td:eq(1)").text().toLowerCase());
+                if (bookName.includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>

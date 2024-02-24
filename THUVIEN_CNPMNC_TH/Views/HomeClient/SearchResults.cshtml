@@ -1,0 +1,35 @@
+﻿@model List<Book> 
+
+<div class="container">
+    <h2>Search Results</h2>
+    <div class="row">
+        @foreach (var book in Model)
+        {
+            <div class="col-6 col-md-4 col-lg-2 book-card">
+                <a style="text-decoration: none;" href="@Url.Action("ViewBookDetails", "HomeClient", new { MaSach = book.MaSach })">
+                    <div class="book-card__cover">
+                        <div class="book-card__book">
+                            <div class="book-card__book-front">
+                                <img class="book-card__img" src="@Url.Content(book.HinhAnh)" />
+                            </div>
+                            <div class="book-card__book-back"></div>
+                            <div class="book-card__book-side"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="book-card__title">
+                            @book.TenSach
+                        </div>
+                        <div>
+                            <a href="@Url.Action("DangKySach", "HomeClient", new { MaSach = book.MaSach })" style="text-decoration: none;">
+                                <button>
+                                    <span>ĐĂNG KÝ</span>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>

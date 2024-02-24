@@ -1,0 +1,72 @@
+﻿
+h1 {
+    margin: 20px 0 20px 20px;
+    color: Red;
+    text-align: center;
+}
+
+.book-details {
+    display: flex;
+    padding: 20px 5% 20px 5%;
+}
+
+.book-image {
+    flex: 0 0 250px;
+    margin-right: 20px;
+}
+
+    .book-image img {
+        width: 250px;
+        height: 350px;
+    }
+
+.book-info {
+    flex: 1;
+}
+
+    .book-info table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .book-info tr {
+        border: none;
+    }
+
+    .book-info th {
+        padding: 10px;
+        text-align: left;
+        color: Black;
+        font-family: Arial, sans-serif;
+        font-size: 25px;
+    }
+
+    .book-info td {
+        padding: 10px;
+        text-align: left;
+    }
+
+.book-actions {
+    margin-top: 20px;
+}
+
+    .book-actions a {
+        margin-right: 10px;
+    }
+
+.mota {
+    padding: 10px 0 0 0;
+    color: Black;
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    margin: 0px;
+}
+
+col-12 {
+    color: Black;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+
+

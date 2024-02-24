@@ -1,0 +1,58 @@
+﻿<link href="~/Areas/Admin/Content/css/SanPham/QLTheLoai.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "QLNXB";
+}
+
+<div class="Content">
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Hãy nhập tên nhà xuất bản bạn muốn tìm kiếm......">
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Mã nhà xuất bản</th>
+                <th>Tên nhà xuất bản </th>
+                <th>Địa chỉ </th>
+                @*<th>Chỉnh sửa</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var nxb in Model)
+            {
+                <tr>
+                    <td>@nxb.MaNXB</td>
+                    <td>@nxb.TenNXB</td>
+                    <td>@nxb.DiaChi</td>
+                    @*<td>
+                        <a href="/Admin/SanPham/EditBookView?MaSach=@nxb.MaNXB" class="action-btn edit-btn">Edit</a>
+                        <a href="/Admin/SanPham/DetailBookView?MaSach=@nxb.MaNXB" class="action-btn detail-btn">Details</a>
+                    </td>*@
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="/Admin/SanPham/AddNXB" class=btn-add>Thêm mới </a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function removeDiacritics(text) {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+    $(document).ready(function () {
+        $("#searchInput").on("input", function () {
+            var searchText = removeDiacritics($(this).val().toLowerCase());
+            $("tbody tr").each(function () {
+                var cateName = removeDiacritics($(this).find("td:eq(1)").text().toLowerCase());
+                if (cateName.includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+

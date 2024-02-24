@@ -1,0 +1,59 @@
+﻿@model THUVIEN_CNPMNC_TH.Models.ViewModel
+
+@{
+    ViewBag.Title = "QLTheDocGia";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/TheDocGia/QLTheDocGia.css" rel="stylesheet" />
+<div class="container">
+    <h1>QUẢN LÝ THẺ ĐỘC GIẢ</h1>
+    <table class="table">
+        <tr>
+            <th>Mã Thẻ</th>
+            <th>Mã Độc Giả</th>
+            <th>Ngày Cấp</th>
+            <th>Hạn Sử Dụng</th>
+            <th></th>
+        </tr>
+        @foreach (var theDocGia in Model.TheDocGias)
+        {
+            <tr>
+                <td>@theDocGia.MaThe</td>
+                <td>@theDocGia.MaDocGia</td>
+                <td>@(theDocGia.NgayCap.HasValue ? theDocGia.NgayCap.Value.ToString("dd/MM/yyyy") : "")</td>
+                <td>@(theDocGia.HanSuDung.HasValue ? theDocGia.HanSuDung.Value.ToString("dd/MM/yyyy") : "")</td>
+                <td>
+                    @using (Html.BeginForm("XoaTheDocGia", "TheDocGia", new { maThe = theDocGia.MaThe }, FormMethod.Post, new { onsubmit = "return confirm('Bạn có chắc muốn xóa thẻ độc giả này?');" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Xóa" class="btn btn-danger" />
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+    <a href="@Url.Action("ThemTheDocGia", "TheDocGia")" class="btn-add">Thêm thẻ độc giả</a>
+
+</div>
+
+<style>
+    .btn-add {
+        background-color: Green;
+        color: white;
+        border: none;
+        padding: 10px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .btn-add:hover {
+        background-color: forestgreen;
+        color: white;
+        text-decoration:none;
+    }
+</style>

@@ -1,0 +1,170 @@
+﻿@model THUVIEN_CNPMNC_TH.Models.ViewModel
+
+@{
+    ViewBag.Title = "XemChiTietSach";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/Css/Home/Details.css">
+<link href="~/Areas/Admin/Content/css/SanPham/Detail.css" rel="stylesheet" />
+
+<style>
+    .book-image img {
+        height: 350px;
+    }
+    h1 {
+        color: red;
+        text-align: center;
+        margin-bottom: 20px;
+        font-family: 'Dancing Script', sans-serif;
+    }
+    .detail{
+        margin-top:6rem;
+    }
+</style>
+
+<div class="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="~/HomeClient/Index">
+                <img class="logo" src="~/Content/Images/logo.png">
+                <span class="brand-text">PL LIBRARY</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll flex-wrap">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="~/HomeClient/Index" l">TRANG CHỦ </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/HomeClient/Library">THƯ VIỆN</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            DANH MỤC
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                            <li class="dropdown-submenu" id="theloai-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Thể Loại</a>
+                                <ul class="dropdown-menu" aria-labelledby="theloai-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Kinh Tế" })">Kinh Tế</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Tiếu Thuyết" })">Tiếu Thuyết</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoTheLoai", "HomeClient", new { TenTheLoai = "Khoa Học" })">Khoa Học</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu" id="nxb-dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#">Nhà Xuất Bản</a>
+                                <ul class="dropdown-menu" aria-labelledby="nxb-dropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất bản Hoa Ngữ" })">Nhà Xuất bản Hoa Ngữ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Trẻ" })">Nhà Xuất Bản Trẻ</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("XemDsTheoNXB", "HomeClient", new { TenNXB = "Nhà Xuất Bản Tương Lai" })">Nhà Xuất Bản Tương Lai</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <form class="d-flex search-form">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-primary" type="submit">Tìm Kiếm</button>
+                </form>
+
+
+                <ul style="--bs-scroll-height: 100px;">
+                    @if (Session["DocGiaRoles"] != null)
+                    {
+                        if ((int)Session["DocGiaRoles"] == 3)
+                        {
+                            <!-- Display the user icon when the role is 3 -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <!-- Display the login link when not logged in -->
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Login/LoginAndRegistration">ĐĂNG NHẬP</a>
+                </li>
+                    }
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="detail">
+    <h1>CHI TIẾT SÁCH</h1>
+    @foreach (var book in Model.Books)
+    {
+        <div class="row book-details" style="margin-top:20px !important">
+            <div class="col-4 book-image">
+                <img id="ChiTietHinh" src="@Url.Content(book.HinhAnh)" />
+            </div>
+            <div class="col-lg-8 book-info">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Tên sách: @Html.DisplayFor(model => book.TenSach)</th>
+                        </tr>
+                        <tr>
+                            <th>Mã thể loại: @Html.DisplayFor(model => book.TheLoai.MaTheLoai)</th>
+                        </tr>
+                        <tr>
+                            <th>Tên thể loại: @Html.DisplayFor(model => book.TheLoai.TenTheLoai)</th>
+                        </tr>
+                        <tr>
+                            <th>Năm xuất bản: @(book.NamXuatBan.HasValue ? book.NamXuatBan.Value.ToString("yyyy") : "")</th>
+                        </tr>
+                        <tr>
+                            <th>Mã nhà xuất bản: @Html.DisplayFor(model => book.NhaXuatBan.MaNXB)</th>
+                        </tr>
+                        <tr>
+                            <th>Nhà xuất bản: @Html.DisplayFor(model => book.NhaXuatBan.TenNXB)</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mota">Mô tả:</p>
+            <span class="col-lg-12">@Html.Raw(book.MoTa)</span>
+        </div>
+    }
+
+    <div class="row related-books">
+        <p class="title-cate-book">SÁCH LIÊN QUAN</p>
+        @foreach (var item in Model.Books2)
+        {
+            <div class="col-2 book-card">
+                <a style="text-decoration: none;" href="@Url.Action("XemChiTietSach", "HomeClient", new { MaSach = item.MaSach })">
+                    <div class="book-card__cover">
+                        <div class="book-card__book">
+                            <div class="book-card__book-front">
+                                <img class="book-card__img" src=@Url.Content(item.HinhAnh) />
+                            </div>
+                            <div class="book-card__book-back"></div>
+                            <div class="book-card__book-side"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="book-card__title">
+                            @item.TenSach
+                        </div>
+                        <div>
+                            <a href="@Url.Action("DangKySach", "HomeClient", new { MaSach = item.MaSach })" style="text-decoration: none;">
+                                <button>
+                                    <span>ĐĂNG KÝ</span>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+    </div>
+</div>

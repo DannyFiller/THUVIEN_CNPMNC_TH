@@ -1,0 +1,100 @@
+﻿@model IEnumerable<THUVIEN_CNPMNC_TH.Models.DocGia>
+
+@{
+    ViewBag.Title = "QLDocGia";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/DocGia/QLDocGia.css" rel="stylesheet" />
+<div class="container-fluid">
+    <h1>QUẢN LÝ ĐỘC GIẢ</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Mã DG</th>
+                <th>Tên DG</th>
+                <th>Ngày sinh</th>
+                <th>Giới tính</th>
+                <th>SDT</th>
+                <th>Email</th>
+                <th>Địa chỉ</th>
+                <th>Chỉnh sửa</th>
+                <!-- Thêm các cột khác tùy ý -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var docGia in Model)
+            {
+                <tr>
+                    <td>@docGia.MaDocGia</td>
+                    <td>@docGia.TenDocGia</td>
+                    <td>@(docGia.NgaySinh.HasValue ? docGia.NgaySinh.Value.ToString("dd/MM/yyyy") : "")</td>
+                    <td>@docGia.GioiTinh</td>
+                    <td>@docGia.SoDienThoai</td>
+                    <td>@docGia.Email</td>
+                    <td>@docGia.DiaChi</td>
+                    <td>
+                        <a href="@Url.Action("EditDocGia", "DocGia", new { maDocGia = docGia.MaDocGia })" class="action-btn "> Sửa </a>
+                        <a href="#" class="action-btn delete-btn" data-docgia-id="@docGia.MaDocGia">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="/Admin/DocGia/AddDocGia" class=btn-add>Thêm độc giả</a>
+
+    <div class="custom-modal" id="confirmationModal">
+        <div class="modal-content">
+            <h2>Xác nhận xóa độc giả</h2>
+            <p>Bạn có muốn xóa độc giả này không?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete">Có </button>
+                <button id="cancelDelete">Không</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function removeDiacritics(text) {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    $(document).ready(function () {
+        $(".delete-btn").on("click", function () {
+            var docgiaid = $(this).data("docgia-id");
+            var confirmationModal = $("#confirmationModal");
+            confirmationModal.css("display", "flex");
+            $("#confirmDelete").on("click", function () {
+                $.ajax({
+                    url: '/Admin/DocGia/DeleteDocGia',
+                    type: 'POST',
+                    data: { MaDocGia: docgiaid },
+                    success: function (data) {
+                        if (data.success) {
+                            location.reload();
+                        } else {
+                            alert("Xóa thất bại.");
+                        }
+                    },
+                    error: function () {
+                        alert("Đã xảy ra lỗi trong khi xử lý yêu cầu của bạn.");
+                    }
+                });
+
+                confirmationModal.hide();
+            });
+            // Xử lý nút Hủy
+            $("#cancelDelete").on("click", function () {
+                confirmationModal.hide();
+            });
+        });
+    });
+
+</script>
